@@ -1232,6 +1232,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			}
 		}
 
+		//クリア処理
+		if (StageNum == 1)
+		{
+			if (object[78].color.y == 0 && object[78].color.z == 0)
+			{
+				if ((object[76].color.x == 0 && object[76].color.y == 0) && (object[77].color.x == 0 && object[77].color.z == 0))
+				{
+					SceneNum = Title;
+				}
+			}
+		}
+
+		else if (StageNum == 2)
+		{
+			//ここに処理を入力
+		}
+
+		else
+		{
+			//ここに処理を入力
+		}
+
 		//スプライトの更新
 		for (int i = 0; i < s_count; i++)
 		{
