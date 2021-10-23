@@ -71,6 +71,7 @@ struct Object
 	XMFLOAT3 eye{ 0, 0, -100 };
 	XMFLOAT3 target{ 0, 0, 0 };
 	XMFLOAT3 up{ 0, 1, 0 };
+	int number = 0;
 };
 
 //頂点データ構造体
@@ -184,15 +185,28 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	ObjectCommonLoadTexture(objectCommon, 8, L"Resource/image/Stage7.png", DxIni->GetDev());
 	ObjectCommonLoadTexture(objectCommon, 9, L"Resource/image/Stage8.png", DxIni->GetDev());
 	ObjectCommonLoadTexture(objectCommon, 10, L"Resource/image/Stage9.png", DxIni->GetDev());
+	ObjectCommonLoadTexture(objectCommon, 11, L"Resource/image/Red.png", DxIni->GetDev());
+	ObjectCommonLoadTexture(objectCommon, 12, L"Resource/image/Green.png", DxIni->GetDev());
+	ObjectCommonLoadTexture(objectCommon, 13, L"Resource/image/Blue.png", DxIni->GetDev());
 
-	const int o_count = 81;
+	const int o_count = 93;
 	Object object[o_count];
 
 	for (int i = 0; i < o_count; i++)
 	{
+		//オブジェクトの番号ごとに割り当て
 		if (i == 0 || i == 64 || i == 65)
 		{
 			object[i] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 0);
+		}
+
+		else if (i >= 1 && i <= 5)
+		{
+			object[1] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 1);
+			object[2] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 11);
+			object[3] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 1);
+			object[4] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 12);
+			object[5] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 13);
 		}
 
 		else if (i > 65 && i < 75)
@@ -200,34 +214,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			object[i] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, i - 64);
 		}
 
-		else if (i == 75)
+		else if (i == 75 || i == 81||i == 87)
 		{
-			object[i] = objectCreateFlont(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 0);
+			object[i] = objectCreateFlont(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 1);
 		}
 
-		else if (i == 76)
+		else if (i == 76 || i == 82 || i == 88)
 		{
-			object[i] = objectCreateBack(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 0);
+			object[i] = objectCreateBack(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 1);
 		}
 
-		else if (i == 77)
+		else if (i == 77 || i == 83 || i == 89)
 		{
-			object[i] = objectCreateLeft(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 0);
+			object[i] = objectCreateLeft(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 1);
 		}
 
-		else if (i == 78)
+		else if (i == 78 || i == 84 || i == 90)
 		{
-			object[i] = objectCreateRight(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 0);
+			object[i] = objectCreateRight(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 1);
 		}
 
-		else if (i == 79)
+		else if (i == 79 || i == 85 || i == 91)
 		{
-			object[i] = objectCreateUp(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 0);
+			object[i] = objectCreateUp(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 1);
 		}
 
-		else if (i == 80)
+		else if (i == 80 || i == 86 || i == 92)
 		{
-			object[i] = objectCreateDown(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 0);
+			object[i] = objectCreateDown(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 1);
 		}
 
 		else
@@ -235,7 +249,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			object[i] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 1);
 		}
 
-		if (i == 64 || i == 65)
+		if (i == 64 || i == 65 || i > 80)
 		{
 			object[i].rotation = { 45, 0, 45 };
 		}
@@ -247,12 +261,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	}
 
 	object[0].position = { 0, 0, -10 };//プレイヤー
-	object[75].position = { 0, 0, -10 };
-	object[76].position = { 0, 0, -10 };
-	object[77].position = { 0, 0, -10 };
-	object[78].position = { 0, 0, -10 };
-	object[79].position = { 0, 0, -10 };
-	object[80].position = { 0, 0, -10 };
+	object[75].position = { -30, 0, -10 };
+	object[76].position = { -30, 0, -10 };
+	object[77].position = { -30, 0, -10 };
+	object[78].position = { -30, 0, -10 };
+	object[79].position = { -30, 0, -10 };
+	object[80].position = { -30, 0, -10 };
 
 	//以下ステージ
 	object[1].position = { -70, 30, 0 };
@@ -318,8 +332,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	object[61].position = { -10, -30, 0 };
 	object[62].position = { 0, -30, 0 };
 	object[63].position = { 10, -30, 0 };
-	object[64].position = { 80, 30, 0 };
-	object[65].position = { 80, -10, 0 };
 	object[66].position = { -70, 30, 0 };
 	object[67].position = { -70, 30, 0 };
 	object[68].position = { -70, 30, 0 };
@@ -329,11 +341,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	object[72].position = { -70, 30, 0 };
 	object[73].position = { -70, 30, 0 };
 	object[74].position = { -70, 30, 0 };
+	
+	//消された辻本
+	object[64].position = { 80, 30, 0 };
+	object[65].position = { 80, -10, 0 };
+	//見本と現在形
+	for (int i = 81; i < 87; i++)
+	{
+		object[i].position = { 80,30,0 };
+	}
+	for (int i = 87; i < 93; i++)
+	{
+		object[i].position = { 80,-10,0 };
+	}
 
 	for (int i = 0; i < o_count; i++)
 	{
 		object[i].scale = { 0.5f, 0.5f, 0.5f };
 	}
+
+	object[75].number = 1;
+	object[76].number = 6;
+	object[77].number = 5;
+	object[78].number = 2;
+	object[79].number = 3;
+	object[80].number = 4;
 
 	//スプライト
 	SpriteCommon spriteCommon;
@@ -463,20 +495,34 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				SceneNum = Game;
 				isLoad = false;
 				LoadCount = 20;
+				for (int i = 75; i < 81; i++)
+				{
+					object[i].position.x = object[1].position.x;
+					object[i].position.y = object[1].position.y;
+				}
 			}
 		}
 
 		//2:ゲーム画面
 		else if (SceneNum == Game)
 		{
+			object[81].color = {0,0,1,1};
+			object[83].color = {0,1,0,1};
+			object[84].color = {1,0,0,1};
 			//背景の更新
 			sprite[1].position = { sprite[0].position.x, sprite[0].position.y, 0 };
 
 			if (StageNum > 0)
 			{
 				//見本とコピーの回転処理
-				object[64].rotation.y += 0.5f;
-				object[65].rotation.y += 0.5f;
+				for (int i = 81; i < 87; i++)
+				{
+					object[i].rotation.y += 0.5;
+				}
+				for (int i = 87; i < 93; i++)
+				{
+					object[i].rotation.y += 0.5;
+				}
 				
 				//デバッグ用ステージ変更処理
 				if (input->IsKeyTrigger(DIK_A))
@@ -919,6 +965,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			}
 		}
 
+		//ステージにある地面の数だけ回す(初期値もステージの最小のi)
+		for (int i = 1; i < 6; i++)
+		{
+			//地面のオブジェクトiに色がついていて、そのブロックの上に乗っているとき
+			if (object[i].position.x == object[75].position.x && object[i].position.y == object[75].position.y 
+				&& object[i].texNumber != 1)
+			{
+				//地面の色が赤の時
+				if (object[i].texNumber == 11)
+				{
+					
+				}
+				//地面の色が緑の時
+				if (object[i].texNumber == 12)
+				{
+					
+				}
+				//地面の色が青の時
+				if (object[i].texNumber == 13)
+				{
+					object[75].position.x += 10;
+				}
+			}
+		}
+
 		//スプライトの更新
 		for (int i = 0; i < s_count; i++)
 		{
@@ -979,7 +1050,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//オブジェクト描画
 		if (SceneNum == Game)
 		{
-			for (int i = 0; i < o_count; i++)
+			for (int i = 1; i < 6; i++)
+			{
+				ObjectDraw(object[i], cmdList, objectCommon, DxIni->GetDev());
+			}
+			for (int i = 66; i < o_count; i++)
 			{
 				ObjectDraw(object[i], cmdList, objectCommon, DxIni->GetDev());
 			}
