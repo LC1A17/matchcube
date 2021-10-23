@@ -360,13 +360,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		object[i].scale = { 0.5f, 0.5f, 0.5f };
 	}
 
-	object[75].number = 1;
-	object[76].number = 6;
-	object[77].number = 5;
-	object[78].number = 2;
-	object[79].number = 3;
-	object[80].number = 4;
-
 	//スプライト
 	SpriteCommon spriteCommon;
 	spriteCommon = SpriteCommonCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT);
@@ -463,6 +456,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	bool isDown = false;//進行方向
 	bool isRota = false;//回転しているか
 	int timer = 0;//回転、移動処理の時間
+	int rotaX = 0;//今のXの向き正なら右に負なら左に回転している
+	int rotaY = 0;//今のYの向き正なら下に負なら上に回転している
 
 	//ゲームループ
 	while (true)
@@ -608,6 +603,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				object[79].rotation.y += 2.25f;
 				object[80].rotation.y += 2.25f;
 				timer++;
+				if (timer == 1)
+				{
+					rotaX -= 1;
+				}
 			}
 
 			else if (isLeft == true && object[75].rotation.y >= 180)
@@ -632,6 +631,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				object[79].rotation.y -= 2.25f;
 				object[80].rotation.y -= 2.25f;
 				timer++;
+				if (timer == 1)
+				{
+					rotaX += 1;
+				}
 			}
 
 			else if (isRight == true && object[75].rotation.y <= -180)
@@ -657,6 +660,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[78].position.y += 0.25f;
 					object[79].position.y += 0.25f;
 					object[80].position.y += 0.25f;
+					timer++;
+					if (timer == 1)
+					{
+						rotaY += 1;
+					}
 				}
 
 				if (abs(object[75].rotation.y) == 180.0f)
@@ -673,9 +681,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[78].position.y += 0.25f;
 					object[79].position.y += 0.25f;
 					object[80].position.y += 0.25f;
+					timer++;
+					if (timer == 1)
+					{
+						rotaY -= 1;
+					}
 				}
-
-				timer++;
 			}
 
 			else if (isUp == true && object[75].position.y >= -40)
@@ -702,6 +713,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[78].position.y -= 0.25f;
 					object[79].position.y -= 0.25f;
 					object[80].position.y -= 0.25f;
+					timer++;
+					if (timer == 1)
+					{
+						rotaY -= 1;
+					}
 				}
 
 				if (abs(object[75].rotation.y) == 180.0f)
@@ -718,9 +734,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[78].position.y -= 0.25f;
 					object[79].position.y -= 0.25f;
 					object[80].position.y -= 0.25f;
+					timer++;
+					if (timer == 1)
+					{
+						rotaY += 1;
+					}
 				}
 
-				timer++;
 			}
 
 			else if (isDown == true && object[75].position.y <= 40)
@@ -738,6 +758,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				isDown = false;
 				isRota = false;
 				timer = 0;
+			}
+
+			if (abs(rotaX) == 4)
+			{
+				rotaX = 0;
+			}
+			if (abs(rotaY) == 4)
+			{
+				rotaY = 0;
 			}
 
 			if (abs(object[75].rotation.y) == 360.0f)
@@ -975,17 +1004,195 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				//地面の色が赤の時
 				if (object[i].texNumber == 11)
 				{
-					
+					if (rotaY == 0)
+					{
+						if (rotaX == 0)
+						{
+							object[76].color = { 1,0,0,1 };
+						}
+						if (rotaX == 1)
+						{
+							object[78].color = { 1,0,0,1 };
+						}
+						if (rotaX == 2)
+						{
+							object[75].color = { 1,0,0,1 };
+						}
+						if (rotaX == 3)
+						{
+							object[77].color = { 1,0,0,1 };
+						}
+					}
+					if (rotaY == 1 || rotaY == -3)
+					{
+						if (rotaX == 0)
+						{
+							object[80].color = { 1,0,0,1 };
+						}
+						if (rotaX == 2)
+						{
+							object[80].color = { 1,0,0,1 };
+						}
+					}
+					if (abs(rotaY) == 2)
+					{
+						if (rotaX == 0)
+						{
+							object[75].color = { 1,0,0,1 };
+						}
+						if (rotaX == 1)
+						{
+							object[78].color = { 1,0,0,1 };
+						}
+						if (rotaX == 2)
+						{
+							object[76].color = { 1,0,0,1 };
+						}
+						if (rotaX == 3)
+						{
+							object[77].color = { 1,0,0,1 };
+						}
+					}
+					if (rotaY == 3 || rotaY == -1)
+					{
+						if (rotaX == 0)
+						{
+							object[79].color = { 1,0,0,1 };
+						}
+						if (rotaX == 2)
+						{
+							object[79].color = { 1,0,0,1 };
+						}
+					}
 				}
+
 				//地面の色が緑の時
 				if (object[i].texNumber == 12)
 				{
-					
+					if (rotaY == 0)
+					{
+						if (rotaX == 0)
+						{
+							object[76].color = { 0,1,0,1 };
+						}
+						if (rotaX == 1)
+						{
+							object[78].color = { 0,1,0,1 };
+						}
+						if (rotaX == 2)
+						{
+							object[75].color = { 0,1,0,1 };
+						}
+						if (rotaX == 3)
+						{
+							object[77].color = { 0,1,0,1 };
+						}
+					}
+					if (rotaY == 1 || rotaY == -3)
+					{
+						if (rotaX == 0)
+						{
+							object[80].color = { 0,1,0,1 };
+						}
+						if (rotaX == 2)
+						{
+							object[80].color = { 0,1,0,1 };
+						}
+					}
+					if (abs(rotaY) == 2)
+					{
+						if (rotaX == 0)
+						{
+							object[75].color = { 0,1,0,1 };
+						}
+						if (rotaX == 1)
+						{
+							object[78].color = { 0,1,0,1 };
+						}
+						if (rotaX == 2)
+						{
+							object[76].color = { 0,1,0,1 };
+						}
+						if (rotaX == 3)
+						{
+							object[77].color = { 0,1,0,1 };
+						}
+					}
+					if (rotaY == 3 || rotaY == -1)
+					{
+						if (rotaX == 0)
+						{
+							object[79].color = { 0,1,0,1 };
+						}
+						if (rotaX == 2)
+						{
+							object[79].color = { 0,1,0,1 };
+						}
+					}
 				}
 				//地面の色が青の時
 				if (object[i].texNumber == 13)
 				{
-					object[75].position.x += 10;
+					if (rotaY == 0)
+					{
+						if (rotaX == 0)
+						{
+							object[76].color = { 0,0,1,1 };
+						}
+						if (rotaX == 1)
+						{
+							object[78].color = { 0,0,1,1 };
+						}
+						if (rotaX == 2)
+						{
+							object[75].color = { 0,0,1,1 };
+						}
+						if (rotaX == 3)
+						{
+							object[77].color = { 0,0,1,1 };
+						}
+					}
+					if (rotaY == 1 || rotaY == -3)
+					{
+						if (rotaX == 0)
+						{
+							object[80].color = { 0,0,1,1 };
+						}
+						if (rotaX == 2)
+						{
+							object[80].color = { 0,0,1,1 };
+						}
+					}
+					if (abs(rotaY) == 2)
+					{
+						if (rotaX == 0)
+						{
+							object[75].color = { 0,0,1,1 };
+						}
+						if (rotaX == 1)
+						{
+							object[78].color = { 0,0,1,1 };
+						}
+						if (rotaX == 2)
+						{
+							object[76].color = { 0,0,1,1 };
+						}
+						if (rotaX == 3)
+						{
+							object[77].color = { 0,0,1,1 };
+						}
+					}
+					if (rotaY == 3 || rotaY == -1)
+					{
+						if (rotaX == 0)
+						{
+							object[79].color = { 0,0,1,1 };
+						}
+						if (rotaX == 2)
+						{
+							object[79].color = { 0,0,1,1 };
+						}
+					}
 				}
 			}
 		}
