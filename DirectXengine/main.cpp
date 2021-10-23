@@ -110,7 +110,7 @@ struct SpriteCommon
 
 //オブジェクトの共通データ
 struct ObjectCommon
-{	
+{
 	PipelineSet pipelineSet;//パイプラインセット
 	XMMATRIX matProjection;//射影行列
 	ComPtr<ID3D12DescriptorHeap> descHeap;//テクスチャ用デスクリプタヒープの生成
@@ -150,15 +150,15 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	DirectXInitialize* DxIni = nullptr;
 	DxIni = new DirectXInitialize();
 	DxIni->Initialize(WinIni);
-	
+
 	Input* input = nullptr;
 	input = new Input();
 	input->Initialize(WinIni->GetInstance(), WinIni->GetHwnd());
-	
+
 	Sound* sound = nullptr;
 	sound = new Sound();
 	sound->Initialize();
-	
+
 	Screen* screen = nullptr;
 	screen = new Screen();
 	screen->Initialize(DxIni, input, sound);
@@ -195,7 +195,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	for (int i = 0; i < o_count; i++)
 	{
 		//オブジェクトの番号ごとに割り当て
-		if (i == 0 || i == 64 || i == 65)
+		if (i == 0 || i == 73 || i == 74)//変更箇所
 		{
 			object[i] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 0);
 		}
@@ -209,12 +209,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			object[5] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 13);
 		}
 
-		else if (i > 65 && i < 75)
+		else if (i > 63 && i < 73)//変更箇所
 		{
-			object[i] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, i - 64);
+			object[i] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, i - 62);//変更箇所
 		}
 
-		else if (i == 75 || i == 81||i == 87)
+		else if (i == 75 || i == 81 || i == 87)
 		{
 			object[i] = objectCreateFlont(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 1);
 		}
@@ -249,7 +249,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			object[i] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 1);
 		}
 
-		if (i == 64 || i == 65 || i > 80)
+		if (i > 80)//変更箇所
 		{
 			object[i].rotation = { 45, 0, 45 };
 		}
@@ -332,19 +332,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	object[61].position = { -10, -30, 0 };
 	object[62].position = { 0, -30, 0 };
 	object[63].position = { 10, -30, 0 };
-	object[66].position = { -70, 30, 0 };
-	object[67].position = { -70, 30, 0 };
-	object[68].position = { -70, 30, 0 };
-	object[69].position = { -70, 30, 0 };
-	object[70].position = { -70, 30, 0 };
-	object[71].position = { -70, 30, 0 };
-	object[72].position = { -70, 30, 0 };
-	object[73].position = { -70, 30, 0 };
-	object[74].position = { -70, 30, 0 };
-	
+
+	//変更箇所ここから
+	object[64].position = { -70, 30, 0 };//ステージ1
+	object[65].position = { -70, 30, 0 };//ステージ2
+	object[66].position = { -70, 30, 0 };//ステージ3
+	object[67].position = { -70, 30, 0 };//ステージ4
+	object[68].position = { -70, 30, 0 };//ステージ5
+	object[69].position = { -70, 30, 0 };//ステージ6
+	object[70].position = { -70, 30, 0 };//ステージ7
+	object[71].position = { -70, 30, 0 };//ステージ8
+	object[72].position = { -70, 30, 0 };//ステージ9
+
 	//消された辻本
-	object[64].position = { 80, 30, 0 };
-	object[65].position = { 80, -10, 0 };
+	object[73].position = { 80, 30, 0 };
+	object[74].position = { 80, -10, 0 };
+	//変更箇所ここまで
+
 	//見本と現在形
 	for (int i = 81; i < 87; i++)
 	{
@@ -447,7 +451,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	bool isChange = false;//ステージ変更処理
 	bool isLoad = false;//ロード
 	int LoadCount = 20;//ロードのウェイト
-	int StageNum = 1;//0はステージセレクト。1～MaxStage
+	int StageNum = 0;//0はステージセレクト。1～MaxStage
 	int MaxStage = 10;//最大ステージ数
 	int MoveDirection = Right;//進行方向
 	bool isLeft = false;//進行方向
@@ -458,6 +462,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	int timer = 0;//回転、移動処理の時間
 	int rotaX = 0;//今のXの向き正なら右に負なら左に回転している
 	int rotaY = 0;//今のYの向き正なら下に負なら上に回転している
+
+	//変更箇所
+	int MaxBlock = 73;//ステージのブロックの数
 
 	//ゲームループ
 	while (true)
@@ -489,21 +496,33 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			{
 				SceneNum = Game;
 				isLoad = false;
+				isChange = true;//変更箇所
 				LoadCount = 20;
-				for (int i = 75; i < 81; i++)
-				{
-					object[i].position.x = object[1].position.x;
-					object[i].position.y = object[1].position.y;
-				}
 			}
 		}
 
 		//2:ゲーム画面
 		else if (SceneNum == Game)
 		{
-			object[82].color = {0,0,1,1};
-			object[83].color = {0,1,0,1};
-			object[84].color = {1,0,0,1};
+			//変更箇所ここから
+			if (StageNum == 1)
+			{
+				object[81].color = { 0,0,1,1 };
+				object[83].color = { 0,1,0,1 };
+				object[84].color = { 1,0,0,1 };
+			}
+
+			else if (StageNum == 2)
+			{
+				//ここに見本の色を入力
+			}
+
+			else if (StageNum == 3)
+			{
+				//ここに見本の色を入力
+			}
+			//変更箇所ここまで
+
 			//背景の更新
 			sprite[1].position = { sprite[0].position.x, sprite[0].position.y, 0 };
 
@@ -514,11 +533,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				{
 					object[i].rotation.y += 0.5;
 				}
+
 				for (int i = 87; i < 93; i++)
 				{
 					object[i].rotation.y += 0.5;
 				}
-				
+
 				//デバッグ用ステージ変更処理
 				if (input->IsKeyTrigger(DIK_A))
 				{
@@ -603,6 +623,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				object[79].rotation.y += 2.25f;
 				object[80].rotation.y += 2.25f;
 				timer++;
+
 				if (timer == 1)
 				{
 					rotaX -= 1;
@@ -631,6 +652,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				object[79].rotation.y -= 2.25f;
 				object[80].rotation.y -= 2.25f;
 				timer++;
+
 				if (timer == 1)
 				{
 					rotaX += 1;
@@ -661,6 +683,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y += 0.25f;
 					object[80].position.y += 0.25f;
 					timer++;
+
 					if (timer == 1)
 					{
 						rotaY += 1;
@@ -682,6 +705,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y += 0.25f;
 					object[80].position.y += 0.25f;
 					timer++;
+
 					if (timer == 1)
 					{
 						rotaY -= 1;
@@ -714,6 +738,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y -= 0.25f;
 					object[80].position.y -= 0.25f;
 					timer++;
+
 					if (timer == 1)
 					{
 						rotaY -= 1;
@@ -735,6 +760,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y -= 0.25f;
 					object[80].position.y -= 0.25f;
 					timer++;
+
 					if (timer == 1)
 					{
 						rotaY += 1;
@@ -764,6 +790,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			{
 				rotaX = 0;
 			}
+
 			if (abs(rotaY) == 4)
 			{
 				rotaY = 0;
@@ -781,74 +808,40 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		}
 
+		//変更箇所ここから
 		//ステージ変更処理
 		if (isChange == true)
 		{
 			if (StageNum == 0)
 			{
-				object[1].position = { -70, 30, 0 };
-				object[2].position = { -60, 30, 0 };
-				object[3].position = { -50, 30, 0 };
-				object[4].position = { -40, 30, 0 };
-				object[5].position = { -30, 30, 0 };
-				object[6].position = { -20, 30, 0 };
-				object[7].position = { -10, 30, 0 };
-				object[8].position = { 0, 30, 0 };
-				object[9].position = { 10, 30, 0 };
-				object[10].position = { -70, 20, 0 };
-				object[11].position = { -60, 20, 0 };
-				object[12].position = { -50, 20, 0 };
-				object[13].position = { -40, 20, 0 };
-				object[14].position = { -30, 20, 0 };
-				object[15].position = { -20, 20, 0 };
-				object[16].position = { -10, 20, 0 };
-				object[17].position = { 0, 20, 0 };
-				object[18].position = { 10, 20, 0 };
-				object[19].position = { -70, 10, 0 };
-				object[20].position = { -60, 10, 0 };
-				object[21].position = { -50, 10, 0 };
-				object[22].position = { -40, 10, 0 };
-				object[23].position = { -30, 10, 0 };
-				object[24].position = { -20, 10, 0 };
-				object[25].position = { -10, 10, 0 };
-				object[26].position = { 0, 10, 0 };
-				object[27].position = { 10, 10, 0 };
-				object[28].position = { -70, 0, 0 };
-				object[29].position = { -60, 0, 0 };
-				object[30].position = { -50, 0, 0 };
-				object[31].position = { -40, 0, 0 };
-				object[32].position = { -30, 0, 0 };
-				object[33].position = { -20, 0, 0 };
-				object[34].position = { -10, 0, 0 };
-				object[35].position = { 0, 0, 0 };
-				object[36].position = { 10, 0, 0 };
-				object[37].position = { -70, -10, 0 };
-				object[38].position = { -60, -10, 0 };
-				object[39].position = { -50, -10, 0 };
-				object[40].position = { -40, -10, 0 };
-				object[41].position = { -30, -10, 0 };
-				object[42].position = { -20, -10, 0 };
-				object[43].position = { -10, -10, 0 };
-				object[44].position = { 0, -10, 0 };
-				object[45].position = { 10, -10, 0 };
-				object[46].position = { -70, -20, 0 };
-				object[47].position = { -60, -20, 0 };
-				object[48].position = { -50, -20, 0 };
-				object[49].position = { -40, -20, 0 };
-				object[50].position = { -30, -20, 0 };
-				object[51].position = { -20, -20, 0 };
-				object[52].position = { -10, -20, 0 };
-				object[53].position = { 0, -20, 0 };
-				object[54].position = { 10, -20, 0 };
-				object[55].position = { -70, -30, 0 };
-				object[56].position = { -60, -30, 0 };
-				object[57].position = { -50, -30, 0 };
-				object[58].position = { -40, -30, 0 };
-				object[59].position = { -30, -30, 0 };
-				object[60].position = { -20, -30, 0 };
-				object[61].position = { -10, -30, 0 };
-				object[62].position = { 0, -30, 0 };
-				object[63].position = { 10, -30, 0 };
+				object[1].position = { -10, 0, 0 };
+				object[64].position = { -20, 0, 0 };//ステージ1
+				object[65].position = { -70, 30, 0 };//ステージ2
+				object[66].position = { -70, 30, 0 };//ステージ3
+				object[67].position = { -70, 30, 0 };//ステージ4
+				object[68].position = { -70, 30, 0 };//ステージ5
+				object[69].position = { -70, 30, 0 };//ステージ6
+				object[70].position = { -70, 30, 0 };//ステージ7
+				object[71].position = { -70, 30, 0 };//ステージ8
+				object[72].position = { -70, 30, 0 };//ステージ9
+
+				//いらないブロックには認識の外側に消えていただく
+				for (int i = 2; i < 64; i++)
+				{
+					object[i].position = { 1000, 1000, 1000 };
+				}
+
+				//プレイヤー
+				for (int i = 75; i < 81; i++)
+				{
+					rotaX = 0;
+					rotaY = 0;
+					object[i].rotation = { 0, 0, 0 };
+					object[i].position.x = object[1].position.x;
+					object[i].position.y = object[1].position.y;
+				}
+
+				MaxBlock = 73;//ステージの最大ブロック数を指定
 				isChange = false;
 			}
 
@@ -860,145 +853,50 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				object[4].position = { -40, 30, 0 };
 				object[5].position = { -30, 30, 0 };
 				object[6].position = { -20, 30, 0 };
-				object[7].position = { -10, 30, 0 };
-				object[8].position = { 0, 30, 0 };
-				object[9].position = { 10, 30, 0 };
-				object[10].position = { -70, 20, 0 };
-				object[11].position = { -60, 20, 0 };
-				object[12].position = { -50, 20, 0 };
-				object[13].position = { -40, 20, 0 };
-				object[14].position = { -30, 20, 0 };
-				object[15].position = { -20, 20, 0 };
-				object[16].position = { -10, 20, 0 };
-				object[17].position = { 0, 20, 0 };
-				object[18].position = { 10, 20, 0 };
-				object[19].position = { -70, 10, 0 };
-				object[20].position = { -60, 10, 0 };
-				object[21].position = { -50, 10, 0 };
-				object[22].position = { -40, 10, 0 };
-				object[23].position = { -30, 10, 0 };
-				object[24].position = { -20, 10, 0 };
-				object[25].position = { -10, 10, 0 };
-				object[26].position = { 0, 10, 0 };
-				object[27].position = { 10, 10, 0 };
-				object[28].position = { -70, 0, 0 };
-				object[29].position = { -60, 0, 0 };
-				object[30].position = { -50, 0, 0 };
-				object[31].position = { -40, 0, 0 };
-				object[32].position = { -30, 0, 0 };
-				object[33].position = { -20, 0, 0 };
-				object[34].position = { -10, 0, 0 };
-				object[35].position = { 0, 0, 0 };
-				object[36].position = { 10, 0, 0 };
-				object[37].position = { -70, -10, 0 };
-				object[38].position = { -60, -10, 0 };
-				object[39].position = { -50, -10, 0 };
-				object[40].position = { -40, -10, 0 };
-				object[41].position = { -30, -10, 0 };
-				object[42].position = { -20, -10, 0 };
-				object[43].position = { -10, -10, 0 };
-				object[44].position = { 0, -10, 0 };
-				object[45].position = { 10, -10, 0 };
-				object[46].position = { -70, -20, 0 };
-				object[47].position = { -60, -20, 0 };
-				object[48].position = { -50, -20, 0 };
-				object[49].position = { -40, -20, 0 };
-				object[50].position = { -30, -20, 0 };
-				object[51].position = { -20, -20, 0 };
-				object[52].position = { -10, -20, 0 };
-				object[53].position = { 0, -20, 0 };
-				object[54].position = { 10, -20, 0 };
-				object[55].position = { -70, -30, 0 };
-				object[56].position = { -60, -30, 0 };
-				object[57].position = { -50, -30, 0 };
-				object[58].position = { -40, -30, 0 };
-				object[59].position = { -30, -30, 0 };
-				object[60].position = { -20, -30, 0 };
-				object[61].position = { -10, -30, 0 };
-				object[62].position = { 0, -30, 0 };
-				object[63].position = { 10, -30, 0 };
+
+				//いらないブロックには認識の外側に消えていただく
+				for (int i = 7; i < 73; i++)
+				{
+					object[i].position = { 1000, 1000, 1000 };
+				}
+
+				//プレイヤー
+				for (int i = 75; i < 81; i++)
+				{
+					rotaX = 0;
+					rotaY = 0;
+					object[i].rotation = { 0, 0, 0 };
+					object[i].position.x = object[1].position.x;
+					object[i].position.y = object[1].position.y;
+				}
+
+				MaxBlock = 6;//ステージの最大ブロック数を指定
 				isChange = false;
 			}
 
 			else if (StageNum == 2)
 			{
-			object[1].position = { -70, 30, 0 };
-			object[2].position = { -60, 30, 0 };
-			object[3].position = { -50, 30, 0 };
-			object[4].position = { -40, 30, 0 };
-			object[5].position = { -30, 30, 0 };
-			object[6].position = { -20, 30, 0 };
-			object[7].position = { -10, 30, 0 };
-			object[8].position = { 0, 30, 0 };
-			object[9].position = { 10, 30, 0 };
-			object[10].position = { -70, 20, 0 };
-			object[11].position = { -60, 20, 0 };
-			object[12].position = { -50, 20, 0 };
-			object[13].position = { -40, 20, 0 };
-			object[14].position = { -30, 20, 0 };
-			object[15].position = { -20, 20, 0 };
-			object[16].position = { -10, 20, 0 };
-			object[17].position = { 0, 20, 0 };
-			object[18].position = { 10, 20, 0 };
-			object[19].position = { -70, 10, 0 };
-			object[20].position = { -60, 10, 0 };
-			object[21].position = { -50, 10, 0 };
-			object[22].position = { -40, 10, 0 };
-			object[23].position = { -30, 10, 0 };
-			object[24].position = { -20, 10, 0 };
-			object[25].position = { -10, 10, 0 };
-			object[26].position = { 0, 10, 0 };
-			object[27].position = { 10, 10, 0 };
-			object[28].position = { -70, 0, 0 };
-			object[29].position = { -60, 0, 0 };
-			object[30].position = { -50, 0, 0 };
-			object[31].position = { -40, 0, 0 };
-			object[32].position = { -30, 0, 0 };
-			object[33].position = { -20, 0, 0 };
-			object[34].position = { -10, 0, 0 };
-			object[35].position = { 0, 0, 0 };
-			object[36].position = { 10, 0, 0 };
-			object[37].position = { -70, -10, 0 };
-			object[38].position = { -60, -10, 0 };
-			object[39].position = { -50, -10, 0 };
-			object[40].position = { -40, -10, 0 };
-			object[41].position = { -30, -10, 0 };
-			object[42].position = { -20, -10, 0 };
-			object[43].position = { -10, -10, 0 };
-			object[44].position = { 0, -10, 0 };
-			object[45].position = { 10, -10, 0 };
-			object[46].position = { -70, -20, 0 };
-			object[47].position = { -60, -20, 0 };
-			object[48].position = { -50, -20, 0 };
-			object[49].position = { -40, -20, 0 };
-			object[50].position = { -30, -20, 0 };
-			object[51].position = { -20, -20, 0 };
-			object[52].position = { -10, -20, 0 };
-			object[53].position = { 0, -20, 0 };
-			object[54].position = { 10, -20, 0 };
-			object[55].position = { -70, -30, 0 };
-			object[56].position = { -60, -30, 0 };
-			object[57].position = { -50, -30, 0 };
-			object[58].position = { -40, -30, 0 };
-			object[59].position = { -30, -30, 0 };
-			object[60].position = { -20, -30, 0 };
-			object[61].position = { -10, -30, 0 };
-			object[62].position = { 0, -30, 0 };
-			object[63].position = { 10, -30, 0 };
+				//ステージ1を参考に入力
+
 				isChange = false;
 			}
+
+			//else ifでStageNumの条件式を追加
 
 			else
 			{
+				//ステージ1を参考に入力
+
 				isChange = false;
 			}
 		}
+		//変更箇所ここまで
 
 		//ステージにある地面の数だけ回す(初期値もステージの最小のi)
-		for (int i = 1; i < 6; i++)
+		for (int i = 1; i < MaxBlock; i++)//変更箇所
 		{
 			//地面のオブジェクトiに色がついていて、そのブロックの上に乗っているとき
-			if (object[i].position.x == object[75].position.x && object[i].position.y == object[75].position.y 
+			if (object[i].position.x == object[75].position.x && object[i].position.y == object[75].position.y
 				&& object[i].texNumber != 1)
 			{
 				//地面の色が赤の時
@@ -1230,6 +1128,76 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					}
 				}
 			}
+
+			//変更箇所ここから
+			//ステージ0において、地面のオブジェクトiに数字がついていて、そのブロックの上に乗っているとき
+			if (StageNum == 0 && object[i].position.x == object[75].position.x && object[i].position.y == object[75].position.y
+				&& object[i].texNumber != 1)
+			{
+				//数字が1の時
+				if (object[i].texNumber == 2)
+				{
+					StageNum = 1;
+					isChange = true;
+				}
+
+				//数字が2の時
+				else if (object[i].texNumber == 3)
+				{
+					StageNum = 2;
+					isChange = true;
+				}
+
+				//数字が3の時
+				else if (object[i].texNumber == 4)
+				{
+					StageNum = 3;
+					isChange = true;
+				}
+
+				//数字が4の時
+				else if (object[i].texNumber == 5)
+				{
+					StageNum = 4;
+					isChange = true;
+				}
+
+				//数字が5の時
+				else if (object[i].texNumber == 6)
+				{
+					StageNum = 5;
+					isChange = true;
+				}
+
+				//数字が6の時
+				else if (object[i].texNumber == 7)
+				{
+					StageNum = 6;
+					isChange = true;
+				}
+
+				//数字が7の時
+				else if (object[i].texNumber == 8)
+				{
+					StageNum = 7;
+					isChange = true;
+				}
+
+				//数字が8の時
+				else if (object[i].texNumber == 9)
+				{
+					StageNum = 8;
+					isChange = true;
+				}
+
+				//数字が9の時
+				else if (object[i].texNumber == 10)
+				{
+					StageNum = 9;
+					isChange = true;
+				}
+			}
+			//変更箇所ここまで
 		}
 
 		//クリア処理
@@ -1265,7 +1233,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		{
 			ObjectUpdate(object[i], objectCommon);
 		}
-		
+
 		//更新処理ここまで
 
 		DxIni->BeforeDraw();//描画開始
@@ -1310,19 +1278,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 
 		ObjectCommonBeginDraw(objectCommon, cmdList);//オブジェクト共通コマンド
-		
+
+		//変更箇所ここから
 		//オブジェクト描画
 		if (SceneNum == Game)
 		{
-			for (int i = 1; i < 6; i++)
+			for (int i = 1; i < MaxBlock; i++)
 			{
 				ObjectDraw(object[i], cmdList, objectCommon, DxIni->GetDev());
 			}
-			for (int i = 66; i < o_count; i++)
+
+			for (int i = 75; i < 81; i++)
 			{
 				ObjectDraw(object[i], cmdList, objectCommon, DxIni->GetDev());
+			}
+
+			if (StageNum > 0)
+			{
+				for (int i = 81; i < o_count; i++)
+				{
+					ObjectDraw(object[i], cmdList, objectCommon, DxIni->GetDev());
+				}
 			}
 		}
+		//変更箇所ここまで
+
 		//描画処理ここまで
 
 		DxIni->AfterDraw();//描画終了
