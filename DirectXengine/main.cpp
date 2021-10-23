@@ -501,7 +501,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//2:ÉQÅ[ÉÄâÊñ 
 		else if (SceneNum == Game)
 		{
-			object[81].color = {0,0,1,1};
+			object[82].color = {0,0,1,1};
 			object[83].color = {0,1,0,1};
 			object[84].color = {1,0,0,1};
 			//îwåiÇÃçXêV
@@ -1009,18 +1009,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						if (rotaX == 0)
 						{
 							object[76].color = { 1,0,0,1 };
+							object[76 + 12].color = { 1,0,0,1 };
 						}
 						if (rotaX == 1)
 						{
 							object[78].color = { 1,0,0,1 };
+							object[78 + 12].color = { 1,0,0,1 };
 						}
 						if (rotaX == 2)
 						{
 							object[75].color = { 1,0,0,1 };
+							object[75 + 12].color = { 1,0,0,1 };
 						}
 						if (rotaX == 3)
 						{
 							object[77].color = { 1,0,0,1 };
+							object[77 + 12].color = { 1,0,0,1 };
 						}
 					}
 					if (rotaY == 1 || rotaY == -3)
@@ -1028,10 +1032,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						if (rotaX == 0)
 						{
 							object[80].color = { 1,0,0,1 };
+							object[80 + 12].color = { 1,0,0,1 };
 						}
 						if (rotaX == 2)
 						{
 							object[80].color = { 1,0,0,1 };
+							object[80 + 12].color = { 1,0,0,1 };
 						}
 					}
 					if (abs(rotaY) == 2)
@@ -1039,18 +1045,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						if (rotaX == 0)
 						{
 							object[75].color = { 1,0,0,1 };
+							object[75 + 12].color = { 1,0,0,1 };
 						}
 						if (rotaX == 1)
 						{
 							object[78].color = { 1,0,0,1 };
+							object[78].color = { 1,0,0,1 };
 						}
 						if (rotaX == 2)
 						{
-							object[76].color = { 1,0,0,1 };
+							object[76 + 12].color = { 1,0,0,1 };
 						}
 						if (rotaX == 3)
 						{
 							object[77].color = { 1,0,0,1 };
+							object[77 + 12].color = { 1,0,0,1 };
 						}
 					}
 					if (rotaY == 3 || rotaY == -1)
@@ -1058,10 +1067,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						if (rotaX == 0)
 						{
 							object[79].color = { 1,0,0,1 };
+							object[79 + 12].color = { 1,0,0,1 };
 						}
 						if (rotaX == 2)
 						{
 							object[79].color = { 1,0,0,1 };
+							object[79 + 12].color = { 1,0,0,1 };
 						}
 					}
 				}
@@ -1074,18 +1085,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						if (rotaX == 0)
 						{
 							object[76].color = { 0,1,0,1 };
+							object[76 + 12].color = { 0,1,0,1 };
 						}
 						if (rotaX == 1)
 						{
 							object[78].color = { 0,1,0,1 };
+							object[78 + 12].color = { 0,1,0,1 };
 						}
 						if (rotaX == 2)
 						{
 							object[75].color = { 0,1,0,1 };
+							object[75 + 12].color = { 0,1,0,1 };
 						}
 						if (rotaX == 3)
 						{
 							object[77].color = { 0,1,0,1 };
+							object[77 + 12].color = { 0,1,0,1 };
 						}
 					}
 					if (rotaY == 1 || rotaY == -3)
@@ -1093,10 +1108,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						if (rotaX == 0)
 						{
 							object[80].color = { 0,1,0,1 };
+							object[80 + 12].color = { 0,1,0,1 };
 						}
 						if (rotaX == 2)
 						{
 							object[80].color = { 0,1,0,1 };
+							object[80 + 12].color = { 0,1,0,1 };
 						}
 					}
 					if (abs(rotaY) == 2)
@@ -1104,18 +1121,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						if (rotaX == 0)
 						{
 							object[75].color = { 0,1,0,1 };
+							object[75 + 12].color = { 0,1,0,1 };
 						}
 						if (rotaX == 1)
 						{
 							object[78].color = { 0,1,0,1 };
+							object[78 + 12].color = { 0,1,0,1 };
 						}
 						if (rotaX == 2)
 						{
 							object[76].color = { 0,1,0,1 };
+							object[76 + 12].color = { 0,1,0,1 };
 						}
 						if (rotaX == 3)
 						{
 							object[77].color = { 0,1,0,1 };
+							object[77 + 12].color = { 0,1,0,1 };
 						}
 					}
 					if (rotaY == 3 || rotaY == -1)
@@ -1123,10 +1144,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						if (rotaX == 0)
 						{
 							object[79].color = { 0,1,0,1 };
+							object[79 + 12].color = { 0,1,0,1 };
 						}
 						if (rotaX == 2)
 						{
 							object[79].color = { 0,1,0,1 };
+							object[79 + 12].color = { 0,1,0,1 };
 						}
 					}
 				}
@@ -1138,18 +1161,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						if (rotaX == 0)
 						{
 							object[76].color = { 0,0,1,1 };
+							object[76 + 12].color = { 0,0,1,1 };
 						}
 						if (rotaX == 1)
 						{
 							object[78].color = { 0,0,1,1 };
+							object[78 + 12].color = { 0,0,1,1 };
 						}
 						if (rotaX == 2)
 						{
 							object[75].color = { 0,0,1,1 };
+							object[75 + 12].color = { 0,0,1,1 };
 						}
 						if (rotaX == 3)
 						{
 							object[77].color = { 0,0,1,1 };
+							object[77 + 12].color = { 0,0,1,1 };
 						}
 					}
 					if (rotaY == 1 || rotaY == -3)
@@ -1157,10 +1184,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						if (rotaX == 0)
 						{
 							object[80].color = { 0,0,1,1 };
+							object[80 + 12].color = { 0,0,1,1 };
 						}
 						if (rotaX == 2)
 						{
 							object[80].color = { 0,0,1,1 };
+							object[80 + 12].color = { 0,0,1,1 };
 						}
 					}
 					if (abs(rotaY) == 2)
@@ -1168,18 +1197,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						if (rotaX == 0)
 						{
 							object[75].color = { 0,0,1,1 };
+							object[75 + 12].color = { 0,0,1,1 };
 						}
 						if (rotaX == 1)
 						{
 							object[78].color = { 0,0,1,1 };
+							object[78 + 12].color = { 0,0,1,1 };
 						}
 						if (rotaX == 2)
 						{
 							object[76].color = { 0,0,1,1 };
+							object[76 + 12].color = { 0,0,1,1 };
 						}
 						if (rotaX == 3)
 						{
 							object[77].color = { 0,0,1,1 };
+							object[77 + 12].color = { 0,0,1,1 };
 						}
 					}
 					if (rotaY == 3 || rotaY == -1)
@@ -1187,10 +1220,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						if (rotaX == 0)
 						{
 							object[79].color = { 0,0,1,1 };
+							object[79 + 12].color = { 0,0,1,1 };
 						}
 						if (rotaX == 2)
 						{
 							object[79].color = { 0,0,1,1 };
+							object[79 + 12].color = { 0,0,1,1 };
 						}
 					}
 				}
