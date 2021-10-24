@@ -498,6 +498,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				isLoad = false;
 				isChange = true;//変更箇所
 				LoadCount = 20;
+				object[75].color = { 1,1,1,1 };
+				object[76].color = { 1,1,1,1 };
+				object[77].color = { 1,1,1,1 };
+				object[78].color = { 1,1,1,1 };
+				object[79].color = { 1,1,1,1 };
+				object[80].color = { 1,1,1,1 };
+				object[87].color = { 1,1,1,1 };
+				object[88].color = { 1,1,1,1 };
+				object[89].color = { 1,1,1,1 };
+				object[90].color = { 1,1,1,1 };
+				object[91].color = { 1,1,1,1 };
+				object[92].color = { 1,1,1,1 };
 			}
 		}
 
@@ -507,7 +519,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			//変更箇所ここから
 			if (StageNum == 1)
 			{
-				object[81].color = { 0,0,1,1 };
+				object[82].color = { 0,0,1,1 };
 				object[83].color = { 0,1,0,1 };
 				object[84].color = { 1,0,0,1 };
 			}
@@ -1208,6 +1220,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				if ((object[76].color.x == 0 && object[76].color.y == 0) && (object[77].color.x == 0 && object[77].color.z == 0))
 				{
 					SceneNum = Title;
+					isChange = false;//ステージ変更処理
+					isLoad = false;//ロード
+					LoadCount = 20;//ロードのウェイト
+					StageNum = 0;//0はステージセレクト。
+					MoveDirection = Right;//進行方向
+					bool isLeft = false;//進行方向
+					bool isRight = false;//進行方向
+					bool isUp = false;//進行方向
+					bool isDown = false;//進行方向
+					bool isRota = false;//回転しているか
+					int timer = 0;//回転、移動処理の時間
+					int rotaX = 0;//今のXの向き正なら右に負なら左に回転している
+					int rotaY = 0;//今のYの向き正なら下に負なら上に回転している
 				}
 			}
 		}
