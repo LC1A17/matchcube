@@ -375,9 +375,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	SpriteCommonLoadTexture(spriteCommon, 3, L"Resource/image/Game_Right.png", DxIni->GetDev());
 	SpriteCommonLoadTexture(spriteCommon, 4, L"Resource/image/Game_Up.png", DxIni->GetDev());
 	SpriteCommonLoadTexture(spriteCommon, 5, L"Resource/image/Game_Down.png", DxIni->GetDev());
-	SpriteCommonLoadTexture(spriteCommon, 6, L"Resource/image/Red.png", DxIni->GetDev());
-	SpriteCommonLoadTexture(spriteCommon, 7, L"Resource/image/Green.png", DxIni->GetDev());
-	SpriteCommonLoadTexture(spriteCommon, 8, L"Resource/image/Blue.png", DxIni->GetDev());
+	SpriteCommonLoadTexture(spriteCommon, 6, L"Resource/image/clear_screen.png", DxIni->GetDev());
 
 	//スプライト
 	const int s_count = 7;
@@ -397,6 +395,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	sprite[3].position = { 1280 / 2, 720 / 2, 0 };
 	sprite[4].position = { 1280 / 2, 720 / 2, 0 };
 	sprite[5].position = { 1280 / 2, 720 / 2, 0 };
+	sprite[6].position = { 1280 / 2, 720 / 2, 0 };
 
 	sprite[0].size.x = WindowsInitialize::WIN_WIDTH;
 	sprite[0].size.y = WindowsInitialize::WIN_HEIGHT;
@@ -415,6 +414,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	sprite[5].size.x = WindowsInitialize::WIN_WIDTH;
 	sprite[5].size.y = WindowsInitialize::WIN_HEIGHT;
+	
+	sprite[6].size.x = WindowsInitialize::WIN_WIDTH;
+	sprite[6].size.y = WindowsInitialize::WIN_HEIGHT;
 
 	sprite[0].texSize = { 1024, 512 };
 	sprite[1].texSize = { 812, 542 };
@@ -422,6 +424,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	sprite[3].texSize = { 1280, 720 };
 	sprite[4].texSize = { 1280, 720 };
 	sprite[5].texSize = { 1280, 720 };
+	sprite[6].texSize = { 1280, 720 };
 
 	//頂点バッファに反映
 	for (int i = 0; i < s_count; i++)
@@ -460,8 +463,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	bool isDown = false;//進行方向
 	bool isRota = false;//回転しているか
 	int timer = 0;//回転、移動処理の時間
-	int rotaX = 0;//今のXの向き正なら右に負なら左に回転している
-	int rotaY = 0;//今のYの向き正なら下に負なら上に回転している
+	int rotaX = 0;//今のXの向き正なら右に負なら左に回転している//4で0になる(処理用)
+	int rotaY = 0;//今のYの向き正なら下に負なら上に回転している//4で0になる(処理用)
+	int rotaXCount = 0;//今のXの向き正なら右に負なら左に回転している
+	int rotaYCount = 0;//今のYの向き正なら下に負なら上に回転している
+	int maxRotaX = 5;
+	int maxRotaY = 5;
+	int minRotaX = -5;
+	int minRotaY = -5;
+	bool movePlus = false;
+	bool moveMin = false;
 
 	//変更箇所
 	int MaxBlock = 73;//ステージのブロックの数
@@ -479,7 +490,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		screen->Update();//更新処理
 
 		//1:タイトル
-		if (SceneNum == Title)
+		if (SceneNum == Title || SceneNum == End)
 		{
 			//SPACEを押したら20フレーム後にステージセレクトに移行
 			if (input->IsKeyTrigger(DIK_SPACE))
@@ -522,6 +533,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				object[82].color = { 0,0,1,1 };
 				object[83].color = { 0,1,0,1 };
 				object[84].color = { 1,0,0,1 };
+				maxRotaX = 5;
+				maxRotaY = 0;
+				minRotaX = 0;
+				minRotaY = 0;
 			}
 
 			else if (StageNum == 2)
@@ -620,7 +635,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 			//回転、移動処理
 			//左
-			if (isLeft == true)
+			if (isLeft == true && minRotaX < rotaXCount 
+				&& abs(object[75].rotation.x) != 90 
+				&& abs(object[75].rotation.x) != 270)
 			{
 				object[75].position.x -= 0.25f;
 				object[76].position.x -= 0.25f;
@@ -635,21 +652,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				object[79].rotation.y += 2.25f;
 				object[80].rotation.y += 2.25f;
 				timer++;
-
-				if (timer == 1)
-				{
-					rotaX -= 1;
-				}
 			}
 
-			else if (isLeft == true && object[75].rotation.y >= 180)
+			else if (isLeft == true 
+				&& minRotaX >= rotaXCount 
+				|| abs(object[75].rotation.x) == 90 
+				|| abs(object[75].rotation.x) == 270)
 			{
 				isLeft = false;
 				isRota = false;
 			}
 
 			//右
-			if (isRight == true)
+			if (isRight == true && maxRotaX > rotaXCount && abs(object[75].rotation.x) != 90 && abs(object[75].rotation.x) != 270)
 			{
 				object[75].position.x += 0.25f;
 				object[76].position.x += 0.25f;
@@ -664,23 +679,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				object[79].rotation.y -= 2.25f;
 				object[80].rotation.y -= 2.25f;
 				timer++;
-
-				if (timer == 1)
-				{
-					rotaX += 1;
-				}
 			}
 
-			else if (isRight == true && object[75].rotation.y <= -180)
+			else if (isRight == true && maxRotaX <= rotaXCount || abs(object[75].rotation.x) == 90 || abs(object[75].rotation.x) == 270)
 			{
 				isRight = false;
 				isRota = false;
 			}
 
 			//上
-			if (isUp == true && object[75].position.y < 40)
+			if (isUp == true)
 			{
-				if (abs(object[75].rotation.y) == 0.0f)
+				if (abs(object[75].rotation.y) == 0.0f && maxRotaY > rotaYCount)
 				{
 					object[75].rotation.x += 2.25f;
 					object[76].rotation.x += 2.25f;
@@ -695,14 +705,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y += 0.25f;
 					object[80].position.y += 0.25f;
 					timer++;
-
-					if (timer == 1)
-					{
-						rotaY += 1;
-					}
+					movePlus = true;
 				}
-
-				if (abs(object[75].rotation.y) == 180.0f)
+				else if (abs(object[75].rotation.y) == 180.0f && minRotaY < rotaYCount)
 				{
 					object[75].rotation.x -= 2.25f;
 					object[76].rotation.x -= 2.25f;
@@ -717,25 +722,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y += 0.25f;
 					object[80].position.y += 0.25f;
 					timer++;
-
-					if (timer == 1)
-					{
-						rotaY -= 1;
-					}
+					moveMin = true;
 				}
-			}
-
-			else if (isUp == true && object[75].position.y >= -40)
-			{
-				isUp = false;
-				isRota = true;
+				else
+				{
+					isUp = false;
+					isRota = false;
+				}
 			}
 
 			//下
-			if (isDown == true && object[75].position.y > -40)
+			if (isDown == true)
 			{
 				//Y軸の角度によって回転が異なるabsは絶対値
-				if (abs(object[75].rotation.y) == 0.0f)
+				if (abs(object[75].rotation.y) == 0.0f && minRotaY < rotaYCount)
 				{
 					object[75].rotation.x -= 2.25f;
 					object[76].rotation.x -= 2.25f;
@@ -750,14 +750,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y -= 0.25f;
 					object[80].position.y -= 0.25f;
 					timer++;
-
-					if (timer == 1)
-					{
-						rotaY -= 1;
-					}
+					moveMin = true;
 				}
-
-				if (abs(object[75].rotation.y) == 180.0f)
+				else if (abs(object[75].rotation.y) == 180.0f && maxRotaY > rotaYCount)
 				{
 					object[75].rotation.x += 2.25f;
 					object[76].rotation.x += 2.25f;
@@ -772,29 +767,45 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y -= 0.25f;
 					object[80].position.y -= 0.25f;
 					timer++;
-
-					if (timer == 1)
-					{
-						rotaY += 1;
-					}
+					movePlus = true;
 				}
-
-			}
-
-			else if (isDown == true && object[75].position.y <= 40)
-			{
-				isDown = false;
-				isRota = false;
+				else
+				{
+					isDown = false;
+					isRota = false;
+				}
 			}
 
 			//timerが40になったら回転、移動処理終了
 			if (timer > 39)
 			{
+				if (isLeft == true)
+				{
+					rotaX -= 1;
+					rotaXCount -= 1;
+				}
+				if (isRight == true)
+				{
+					rotaX += 1;
+					rotaXCount += 1;
+				}
+				if (movePlus == true)
+				{
+					rotaY += 1;
+					rotaYCount += 1;
+				}
+				if (moveMin == true)
+				{
+					rotaY -= 1;
+					rotaYCount -= 1;
+				}
 				isLeft = false;
 				isRight = false;
 				isUp = false;
 				isDown = false;
 				isRota = false;
+				movePlus = false;
+				moveMin = false;
 				timer = 0;
 			}
 
@@ -848,11 +859,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				{
 					rotaX = 0;
 					rotaY = 0;
+					rotaXCount = 0;
+					rotaYCount = 0;
 					object[i].rotation = { 0, 0, 0 };
 					object[i].position.x = object[1].position.x;
 					object[i].position.y = object[1].position.y;
 				}
-
 				MaxBlock = 73;//ステージの最大ブロック数を指定
 				isChange = false;
 			}
@@ -877,6 +889,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				{
 					rotaX = 0;
 					rotaY = 0;
+					rotaXCount = 0;
+					rotaYCount = 0;
 					object[i].rotation = { 0, 0, 0 };
 					object[i].position.x = object[1].position.x;
 					object[i].position.y = object[1].position.y;
@@ -1219,7 +1233,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			{
 				if ((object[76].color.x == 0 && object[76].color.y == 0) && (object[77].color.x == 0 && object[77].color.z == 0))
 				{
-					SceneNum = Title;
+					SceneNum = End;
 					isChange = false;//ステージ変更処理
 					isLoad = false;//ロード
 					LoadCount = 20;//ロードのウェイト
@@ -1276,7 +1290,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		{
 			SpriteDraw(sprite[0], cmdList, spriteCommon, DxIni->GetDev());
 		}
-
+		else if (SceneNum == End)
+		{
+			SpriteDraw(sprite[6], cmdList, spriteCommon, DxIni->GetDev());
+		}
 		else
 		{
 			SpriteDraw(sprite[1], cmdList, spriteCommon, DxIni->GetDev());
