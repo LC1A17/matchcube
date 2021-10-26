@@ -547,7 +547,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			}
 
 			//SPACEを押したら回転、移動処理開始
-			if (input->IsKeyTrigger(DIK_SPACE) && isRota == false)
+			if (input->IsKeyTrigger(DIK_SPACE) && isRota == false && timer == 0)
 			{
 				if (MoveDirection == Left)
 				{
@@ -665,10 +665,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y += 0.25f;
 					object[80].position.y += 0.25f;
 					timer++;
-					movePlus = true;
 				}
 
-				else if (abs(object[75].rotation.y) == 180.0f && minRotaY < rotaYCount)
+				else if (abs(object[75].rotation.y) == 180.0f && maxRotaY > rotaYCount)
 				{
 					object[75].rotation.x -= 2.25f;
 					object[76].rotation.x -= 2.25f;
@@ -683,7 +682,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y += 0.25f;
 					object[80].position.y += 0.25f;
 					timer++;
-					moveMin = true;
 				}
 
 				else
@@ -712,10 +710,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y -= 0.25f;
 					object[80].position.y -= 0.25f;
 					timer++;
-					moveMin = true;
 				}
 
-				else if (abs(object[75].rotation.y) == 180.0f && maxRotaY > rotaYCount)
+				else if (abs(object[75].rotation.y) == 180.0f && minRotaY < rotaYCount)
 				{
 					object[75].rotation.x += 2.25f;
 					object[76].rotation.x += 2.25f;
@@ -730,7 +727,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y -= 0.25f;
 					object[80].position.y -= 0.25f;
 					timer++;
-					movePlus = true;
 				}
 
 				else
@@ -748,20 +744,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					rotaX -= 1;
 					rotaXCount -= 1;
 				}
-
 				if (isRight == true)
 				{
 					rotaX += 1;
 					rotaXCount += 1;
 				}
-
-				if (movePlus == true)
+				if (isUp == true)
 				{
 					rotaY += 1;
 					rotaYCount += 1;
 				}
-
-				if (moveMin == true)
+				if (isDown == true)
 				{
 					rotaY -= 1;
 					rotaYCount -= 1;
@@ -772,8 +765,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				isUp = false;
 				isDown = false;
 				isRota = false;
-				movePlus = false;
-				moveMin = false;
 				isHit = true;
 				timer = 0;
 			}
@@ -807,7 +798,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			{
 				object[1].position = { -30, 0, 0 };
 				object[64].position = { -30, 10, 0 };//ステージ1
-				object[65].position = { -70, 30, 0 };//ステージ2
+				object[65].position = { -30, -10, 0 };//ステージ2
 				object[66].position = { -70, 30, 0 };//ステージ3
 				object[67].position = { -70, 30, 0 };//ステージ4
 				object[68].position = { -70, 30, 0 };//ステージ5
@@ -867,6 +858,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				//プレイヤー
 				for (int i = 75; i < 81; i++)
 				{
+					object[i].color = { 1,1,1,1 };
 					rotaX = 0;
 					rotaY = 0;
 					rotaXCount = 0;
@@ -874,6 +866,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[i].rotation = { 0, 0, 0 };
 					object[i].position.x = object[1].position.x;
 					object[i].position.y = object[1].position.y;
+				}
+
+				for (int i = 87; i < 93; i++)
+				{
+					object[i].color = { 1,1,1,1 };
 				}
 
 				maxRotaX = 4;
@@ -886,8 +883,79 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 			else if (StageNum == 2)
 			{
-				//ステージ1を参考に入力
+				object[1].position = { -50, 0, 0 };
+				object[2].position = { -40, 0, 0 };
+				object[3].position = { -30, 0, 0 };
+				object[4].position = { -20, 0, 0 };
+				object[5].position = { -10, 0, 0 };
+				object[6].position = { -50, -20, 0 };
+				object[7].position = { -40, -20, 0 };
+				object[8].position = { -30, -20, 0 };
+				object[9].position = { -20, -20, 0 };
+				object[10].position = { -10, -20, 0 };
+				object[11].position = { -50, 20, 0 };
+				object[12].position = { -40, 20, 0 };
+				object[13].position = { -30, 20, 0 };
+				object[14].position = { -20, 20, 0 };
+				object[15].position = { -10, 20, 0 };
+				object[16].position = { -50, 10, 0 };
+				object[17].position = { -30, 10, 0 };
+				object[18].position = { -10, 10, 0 };
+				object[19].position = { -50, -10, 0 };
+				object[20].position = { -30, -10, 0 };
+				object[21].position = { -10, -10, 0 };
+				
+				object[1].texNumber = 1;
+				object[2].texNumber = 11;
+				object[3].texNumber = 1;
+				object[4].texNumber = 1;
+				object[5].texNumber = 1;
+				object[6].texNumber = 1;
+				object[7].texNumber = 12;
+				object[8].texNumber = 1;
+				object[9].texNumber = 1;
+				object[10].texNumber = 1;
+				object[11].texNumber = 1;
+				object[12].texNumber = 1;
+				object[13].texNumber = 11;
+				object[14].texNumber = 1;
+				object[15].texNumber = 1;
+				object[16].texNumber = 1;
+				object[17].texNumber = 1;
+				object[18].texNumber = 1;
+				object[19].texNumber = 13;
+				object[20].texNumber = 1;
+				object[21].texNumber = 1;
 
+				//いらないブロックには認識の外側に消えていただく
+				for (int i = 22; i < 73; i++)
+				{
+					object[i].position = { 1000, 1000, 1000 };
+				}
+
+				//プレイヤー
+				for (int i = 75; i < 81; i++)
+				{
+					object[i].color = { 1,1,1,1 };
+					rotaX = 0;
+					rotaY = 0;
+					rotaXCount = 0;
+					rotaYCount = 0;
+					object[i].rotation = { 0, 0, 0 };
+					object[i].position.x = object[3].position.x;
+					object[i].position.y = object[3].position.y;
+				}
+
+				for (int i = 87; i < 93; i++)
+				{
+					object[i].color = { 1,1,1,1 };
+				}
+
+				maxRotaX = 2;
+				maxRotaY = 2;
+				minRotaX = -2;
+				minRotaY = -2;
+				MaxBlock = 22;//ステージの最大ブロック数を指定
 				isChange = false;
 			}
 
