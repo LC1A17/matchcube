@@ -195,7 +195,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	for (int i = 0; i < o_count; i++)
 	{
 		//オブジェクトの番号ごとに割り当て
-		if (i == 0 || i == 73 || i == 74)//変更箇所
+		if (i == 0 || i == 73 || i == 74)
 		{
 			object[i] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 0);
 		}
@@ -209,9 +209,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			object[5] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 13);
 		}
 
-		else if (i > 63 && i < 73)//変更箇所
+		else if (i > 63 && i < 73)
 		{
-			object[i] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, i - 62);//変更箇所
+			object[i] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, i - 62);
 		}
 
 		else if (i == 75 || i == 81 || i == 87)
@@ -249,7 +249,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			object[i] = objectCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT, 1);
 		}
 
-		if (i > 80)//変更箇所
+		if (i > 80)
 		{
 			object[i].rotation = { 45, 0, 45 };
 		}
@@ -260,7 +260,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		}
 	}
 
-	object[0].position = { 0, 0, -10 };//プレイヤー
+	object[0].position = { 0, 0, -10 };
 	object[75].position = { -30, 0, -10 };
 	object[76].position = { -30, 0, -10 };
 	object[77].position = { -30, 0, -10 };
@@ -332,8 +332,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	object[61].position = { -10, -30, 0 };
 	object[62].position = { 0, -30, 0 };
 	object[63].position = { 10, -30, 0 };
-
-	//変更箇所ここから
 	object[64].position = { -70, 30, 0 };//ステージ1
 	object[65].position = { -70, 30, 0 };//ステージ2
 	object[66].position = { -70, 30, 0 };//ステージ3
@@ -347,13 +345,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//消された辻本
 	object[73].position = { 80, 30, 0 };
 	object[74].position = { 80, -10, 0 };
-	//変更箇所ここまで
-
+	
 	//見本と現在形
 	for (int i = 81; i < 87; i++)
 	{
 		object[i].position = { 80,30,0 };
 	}
+
 	for (int i = 87; i < 93; i++)
 	{
 		object[i].position = { 80,-10,0 };
@@ -375,9 +373,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	SpriteCommonLoadTexture(spriteCommon, 3, L"Resource/image/Game_Right.png", DxIni->GetDev());
 	SpriteCommonLoadTexture(spriteCommon, 4, L"Resource/image/Game_Up.png", DxIni->GetDev());
 	SpriteCommonLoadTexture(spriteCommon, 5, L"Resource/image/Game_Down.png", DxIni->GetDev());
-	SpriteCommonLoadTexture(spriteCommon, 6, L"Resource/image/Red.png", DxIni->GetDev());
-	SpriteCommonLoadTexture(spriteCommon, 7, L"Resource/image/Green.png", DxIni->GetDev());
-	SpriteCommonLoadTexture(spriteCommon, 8, L"Resource/image/Blue.png", DxIni->GetDev());
+	SpriteCommonLoadTexture(spriteCommon, 6, L"Resource/image/clear_screen.png", DxIni->GetDev());
 
 	//スプライト
 	const int s_count = 7;
@@ -397,6 +393,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	sprite[3].position = { 1280 / 2, 720 / 2, 0 };
 	sprite[4].position = { 1280 / 2, 720 / 2, 0 };
 	sprite[5].position = { 1280 / 2, 720 / 2, 0 };
+	sprite[6].position = { 1280 / 2, 720 / 2, 0 };
 
 	sprite[0].size.x = WindowsInitialize::WIN_WIDTH;
 	sprite[0].size.y = WindowsInitialize::WIN_HEIGHT;
@@ -416,12 +413,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	sprite[5].size.x = WindowsInitialize::WIN_WIDTH;
 	sprite[5].size.y = WindowsInitialize::WIN_HEIGHT;
 
+	sprite[6].size.x = WindowsInitialize::WIN_WIDTH;
+	sprite[6].size.y = WindowsInitialize::WIN_HEIGHT;
+
 	sprite[0].texSize = { 1024, 512 };
 	sprite[1].texSize = { 812, 542 };
 	sprite[2].texSize = { 1280, 720 };
 	sprite[3].texSize = { 1280, 720 };
 	sprite[4].texSize = { 1280, 720 };
 	sprite[5].texSize = { 1280, 720 };
+	sprite[6].texSize = { 1280, 720 };
 
 	//頂点バッファに反映
 	for (int i = 0; i < s_count; i++)
@@ -460,11 +461,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	bool isDown = false;//進行方向
 	bool isRota = false;//回転しているか
 	int timer = 0;//回転、移動処理の時間
-	int rotaX = 0;//今のXの向き正なら右に負なら左に回転している
-	int rotaY = 0;//今のYの向き正なら下に負なら上に回転している
-
-	//変更箇所
+	int rotaX = 0;//今のXの向き正なら右に負なら左に回転している//4で0になる(処理用)
+	int rotaY = 0;//今のYの向き正なら下に負なら上に回転している//4で0になる(処理用)
+	int rotaXCount = 0;//今のXの向き正なら右に負なら左に回転している
+	int rotaYCount = 0;//今のYの向き正なら下に負なら上に回転している
+	int maxRotaX = 5;
+	int maxRotaY = 5;
+	int minRotaX = -5;
+	int minRotaY = -5;
+	bool movePlus = false;
+	bool moveMin = false;
 	int MaxBlock = 73;//ステージのブロックの数
+	bool isHit = false;
 
 	//ゲームループ
 	while (true)
@@ -479,7 +487,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		screen->Update();//更新処理
 
 		//1:タイトル
-		if (SceneNum == Title)
+		if (SceneNum == Title || SceneNum == End)
 		{
 			//SPACEを押したら20フレーム後にステージセレクトに移行
 			if (input->IsKeyTrigger(DIK_SPACE))
@@ -496,7 +504,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			{
 				SceneNum = Game;
 				isLoad = false;
-				isChange = true;//変更箇所
+				isChange = true;
 				LoadCount = 20;
 			}
 		}
@@ -504,10 +512,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//2:ゲーム画面
 		else if (SceneNum == Game)
 		{
-			//変更箇所ここから
 			if (StageNum == 1)
 			{
-				object[81].color = { 0,0,1,1 };
+				object[82].color = { 0,0,1,1 };
 				object[83].color = { 0,1,0,1 };
 				object[84].color = { 1,0,0,1 };
 			}
@@ -521,7 +528,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			{
 				//ここに見本の色を入力
 			}
-			//変更箇所ここまで
 
 			//背景の更新
 			sprite[1].position = { sprite[0].position.x, sprite[0].position.y, 0 };
@@ -537,25 +543,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				for (int i = 87; i < 93; i++)
 				{
 					object[i].rotation.y += 0.5;
-				}
-
-				//デバッグ用ステージ変更処理
-				if (input->IsKeyTrigger(DIK_A))
-				{
-					if (StageNum > 0)
-					{
-						isChange = true;
-						StageNum--;
-					}
-				}
-
-				if (input->IsKeyTrigger(DIK_D))
-				{
-					if (StageNum < MaxStage)
-					{
-						isChange = true;
-						StageNum++;
-					}
 				}
 			}
 
@@ -608,7 +595,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 			//回転、移動処理
 			//左
-			if (isLeft == true)
+			if (isLeft == true && minRotaX < rotaXCount
+				&& abs(object[75].rotation.x) != 90
+				&& abs(object[75].rotation.x) != 270)
 			{
 				object[75].position.x -= 0.25f;
 				object[76].position.x -= 0.25f;
@@ -623,21 +612,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				object[79].rotation.y += 2.25f;
 				object[80].rotation.y += 2.25f;
 				timer++;
-
-				if (timer == 1)
-				{
-					rotaX -= 1;
-				}
 			}
 
-			else if (isLeft == true && object[75].rotation.y >= 180)
+			else if (isLeft == true
+				&& minRotaX >= rotaXCount
+				|| abs(object[75].rotation.x) == 90
+				|| abs(object[75].rotation.x) == 270)
 			{
 				isLeft = false;
 				isRota = false;
 			}
 
 			//右
-			if (isRight == true)
+			if (isRight == true && maxRotaX > rotaXCount && abs(object[75].rotation.x) != 90 && abs(object[75].rotation.x) != 270)
 			{
 				object[75].position.x += 0.25f;
 				object[76].position.x += 0.25f;
@@ -652,23 +639,18 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				object[79].rotation.y -= 2.25f;
 				object[80].rotation.y -= 2.25f;
 				timer++;
-
-				if (timer == 1)
-				{
-					rotaX += 1;
-				}
 			}
 
-			else if (isRight == true && object[75].rotation.y <= -180)
+			else if (isRight == true && maxRotaX <= rotaXCount || abs(object[75].rotation.x) == 90 || abs(object[75].rotation.x) == 270)
 			{
 				isRight = false;
 				isRota = false;
 			}
 
 			//上
-			if (isUp == true && object[75].position.y < 40)
+			if (isUp == true)
 			{
-				if (abs(object[75].rotation.y) == 0.0f)
+				if (abs(object[75].rotation.y) == 0.0f && maxRotaY > rotaYCount)
 				{
 					object[75].rotation.x += 2.25f;
 					object[76].rotation.x += 2.25f;
@@ -683,14 +665,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y += 0.25f;
 					object[80].position.y += 0.25f;
 					timer++;
-
-					if (timer == 1)
-					{
-						rotaY += 1;
-					}
+					movePlus = true;
 				}
 
-				if (abs(object[75].rotation.y) == 180.0f)
+				else if (abs(object[75].rotation.y) == 180.0f && minRotaY < rotaYCount)
 				{
 					object[75].rotation.x -= 2.25f;
 					object[76].rotation.x -= 2.25f;
@@ -705,25 +683,21 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y += 0.25f;
 					object[80].position.y += 0.25f;
 					timer++;
-					
-					if (timer == 1)
-					{
-						rotaY -= 1;
-					}
+					moveMin = true;
 				}
-			}
 
-			else if (isUp == true && object[75].position.y >= -40)
-			{
-				isUp = false;
-				isRota = true;
+				else
+				{
+					isUp = false;
+					isRota = false;
+				}
 			}
 
 			//下
-			if (isDown == true && object[75].position.y > -40)
+			if (isDown == true)
 			{
 				//Y軸の角度によって回転が異なるabsは絶対値
-				if (abs(object[75].rotation.y) == 0.0f)
+				if (abs(object[75].rotation.y) == 0.0f && minRotaY < rotaYCount)
 				{
 					object[75].rotation.x -= 2.25f;
 					object[76].rotation.x -= 2.25f;
@@ -738,14 +712,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y -= 0.25f;
 					object[80].position.y -= 0.25f;
 					timer++;
-
-					if (timer == 1)
-					{
-						rotaY -= 1;
-					}
+					moveMin = true;
 				}
 
-				if (abs(object[75].rotation.y) == 180.0f)
+				else if (abs(object[75].rotation.y) == 180.0f && maxRotaY > rotaYCount)
 				{
 					object[75].rotation.x += 2.25f;
 					object[76].rotation.x += 2.25f;
@@ -760,29 +730,51 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[79].position.y -= 0.25f;
 					object[80].position.y -= 0.25f;
 					timer++;
-
-					if (timer == 1)
-					{
-						rotaY += 1;
-					}
+					movePlus = true;
 				}
 
-			}
-
-			else if (isDown == true && object[75].position.y <= 40)
-			{
-				isDown = false;
-				isRota = false;
+				else
+				{
+					isDown = false;
+					isRota = false;
+				}
 			}
 
 			//timerが40になったら回転、移動処理終了
 			if (timer > 39)
 			{
+				if (isLeft == true)
+				{
+					rotaX -= 1;
+					rotaXCount -= 1;
+				}
+
+				if (isRight == true)
+				{
+					rotaX += 1;
+					rotaXCount += 1;
+				}
+
+				if (movePlus == true)
+				{
+					rotaY += 1;
+					rotaYCount += 1;
+				}
+
+				if (moveMin == true)
+				{
+					rotaY -= 1;
+					rotaYCount -= 1;
+				}
+
 				isLeft = false;
 				isRight = false;
 				isUp = false;
 				isDown = false;
 				isRota = false;
+				movePlus = false;
+				moveMin = false;
+				isHit = true;
 				timer = 0;
 			}
 
@@ -808,14 +800,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		}
 
-		//変更箇所ここから
 		//ステージ変更処理
 		if (isChange == true)
 		{
 			if (StageNum == 0)
 			{
-				object[1].position = { -10, 0, 0 };
-				object[64].position = { -20, 0, 0 };//ステージ1
+				object[1].position = { -30, 0, 0 };
+				object[64].position = { -30, 10, 0 };//ステージ1
 				object[65].position = { -70, 30, 0 };//ステージ2
 				object[66].position = { -70, 30, 0 };//ステージ3
 				object[67].position = { -70, 30, 0 };//ステージ4
@@ -834,11 +825,19 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				//プレイヤー
 				for (int i = 75; i < 81; i++)
 				{
+					object[i].color = { 1,1,1,1 };
 					rotaX = 0;
 					rotaY = 0;
+					rotaXCount = 0;
+					rotaYCount = 0;
 					object[i].rotation = { 0, 0, 0 };
 					object[i].position.x = object[1].position.x;
 					object[i].position.y = object[1].position.y;
+				}
+
+				for (int i = 87; i < 93; i++)
+				{
+					object[i].color = { 1,1,1,1 };
 				}
 
 				MaxBlock = 73;//ステージの最大ブロック数を指定
@@ -847,29 +846,40 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 			else if (StageNum == 1)
 			{
-				object[1].position = { -70, 30, 0 };
-				object[2].position = { -60, 30, 0 };
-				object[3].position = { -50, 30, 0 };
-				object[4].position = { -40, 30, 0 };
-				object[5].position = { -30, 30, 0 };
-				object[6].position = { -20, 30, 0 };
+				object[1].position = { -50, 0, 0 };
+				object[2].position = { -40, 0, 0 };
+				object[3].position = { -30, 0, 0 };
+				object[4].position = { -20, 0, 0 };
+				object[5].position = { -10, 0, 0 };
+
+				object[1].texNumber = 1;
+				object[2].texNumber = 11;
+				object[3].texNumber = 1;
+				object[4].texNumber = 12;
+				object[5].texNumber = 13;
 
 				//いらないブロックには認識の外側に消えていただく
-				for (int i = 7; i < 73; i++)
+				for (int i = 6; i < 73; i++)
 				{
 					object[i].position = { 1000, 1000, 1000 };
 				}
-				
+
 				//プレイヤー
 				for (int i = 75; i < 81; i++)
 				{
 					rotaX = 0;
 					rotaY = 0;
+					rotaXCount = 0;
+					rotaYCount = 0;
 					object[i].rotation = { 0, 0, 0 };
 					object[i].position.x = object[1].position.x;
 					object[i].position.y = object[1].position.y;
 				}
 
+				maxRotaX = 4;
+				maxRotaY = 0;
+				minRotaX = 0;
+				minRotaY = 0;
 				MaxBlock = 6;//ステージの最大ブロック数を指定
 				isChange = false;
 			}
@@ -890,313 +900,689 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				isChange = false;
 			}
 		}
-		//変更箇所ここまで
 
-		//ステージにある地面の数だけ回す(初期値もステージの最小のi)
-		for (int i = 1; i < MaxBlock; i++)//変更箇所
+		if (isHit == true)
 		{
-			//地面のオブジェクトiに色がついていて、そのブロックの上に乗っているとき
-			if (object[i].position.x == object[75].position.x && object[i].position.y == object[75].position.y
-				&& object[i].texNumber != 1)
+			//ステージにある地面の数だけ回す(初期値もステージの最小のi)
+			for (int i = 1; i < MaxBlock; i++)
 			{
-				//地面の色が赤の時
-				if (object[i].texNumber == 11)
+				//地面のオブジェクトiとの当たり判定
+				if (object[i].position.x == object[75].position.x && object[i].position.y == object[75].position.y)
 				{
-					if (rotaY == 0)
+					//地面に何もないとき
+					if (object[i].texNumber == 1)
 					{
-						if (rotaX == 0)
+						if (rotaY == 0)
 						{
-							object[76].color = { 1,0,0,1 };
+							if (rotaX == 0)
+							{
+								//赤
+								if (object[76].color.y == 0 && object[76].color.z == 0)
+								{
+									object[i].texNumber = 11;
+								}
+
+								//緑
+								else if (object[76].color.x == 0 && object[76].color.z == 0)
+								{
+									object[i].texNumber = 12;
+								}
+
+								//青
+								else if (object[76].color.x == 0 && object[76].color.y == 0)
+								{
+									object[i].texNumber = 13;
+								}
+
+								object[76].color = { 1,1,1,1 };
+								object[76 + 12].color = { 1,1,1,1 };
+							}
+
+							if (rotaX == 1)
+							{
+								//赤
+								if (object[78].color.y == 0 && object[78].color.z == 0)
+								{
+									object[i].texNumber = 11;
+								}
+
+								//緑
+								else if (object[78].color.x == 0 && object[78].color.z == 0)
+								{
+									object[i].texNumber = 12;
+								}
+
+								//青
+								else if (object[78].color.x == 0 && object[78].color.y == 0)
+								{
+									object[i].texNumber = 13;
+								}
+
+								object[78].color = { 1,1,1,1 };
+								object[78 + 12].color = { 1,1,1,1 };
+							}
+
+							if (rotaX == 2)
+							{
+								//赤
+								if (object[75].color.y == 0 && object[75].color.z == 0)
+								{
+									object[i].texNumber = 11;
+								}
+
+								//緑
+								else if (object[75].color.x == 0 && object[75].color.z == 0)
+								{
+									object[i].texNumber = 12;
+								}
+
+								//青
+								else if (object[75].color.x == 0 && object[75].color.y == 0)
+								{
+									object[i].texNumber = 13;
+								}
+
+								object[75].color = { 1,1,1,1 };
+								object[75 + 12].color = { 1,1,1,1 };
+							}
+
+							if (rotaX == 3)
+							{
+								//赤
+								if (object[77].color.y == 0 && object[77].color.z == 0)
+								{
+									object[i].texNumber = 11;
+								}
+
+								//緑
+								else if (object[77].color.x == 0 && object[77].color.z == 0)
+								{
+									object[i].texNumber = 12;
+								}
+
+								//青
+								else if (object[77].color.x == 0 && object[77].color.y == 0)
+								{
+									object[i].texNumber = 13;
+								}
+
+								object[77].color = { 1,1,1,1 };
+								object[77 + 12].color = { 1,1,1,1 };
+							}
 						}
 
-						if (rotaX == 1)
+						if (rotaY == 1 || rotaY == -3)
 						{
-							object[78].color = { 1,0,0,1 };
+							if (rotaX == 0)
+							{
+								//赤
+								if (object[80].color.y == 0 && object[80].color.z == 0)
+								{
+									object[i].texNumber = 11;
+								}
+
+								//緑
+								else if (object[80].color.x == 0 && object[80].color.z == 0)
+								{
+									object[i].texNumber = 12;
+								}
+
+								//青
+								else if (object[80].color.x == 0 && object[80].color.y == 0)
+								{
+									object[i].texNumber = 13;
+								}
+
+								object[80].color = { 1,1,1,1 };
+								object[80 + 12].color = { 1,1,1,1 };
+							}
+
+							if (rotaX == 2)
+							{
+								//赤
+								if (object[80].color.y == 0 && object[80].color.z == 0)
+								{
+									object[i].texNumber = 11;
+								}
+
+								//緑
+								else if (object[80].color.x == 0 && object[80].color.z == 0)
+								{
+									object[i].texNumber = 12;
+								}
+
+								//青
+								else if (object[80].color.x == 0 && object[80].color.y == 0)
+								{
+									object[i].texNumber = 13;
+								}
+
+								object[80].color = { 1,1,1,1 };
+								object[80 + 12].color = { 1,1,1,1 };
+							}
 						}
 
-						if (rotaX == 2)
+						if (abs(rotaY) == 2)
 						{
-							object[75].color = { 1,0,0,1 };
+							if (rotaX == 0)
+							{
+								//赤
+								if (object[75].color.y == 0 && object[75].color.z == 0)
+								{
+									object[i].texNumber = 11;
+								}
+
+								//緑
+								else if (object[75].color.x == 0 && object[75].color.z == 0)
+								{
+									object[i].texNumber = 12;
+								}
+
+								//青
+								else if (object[75].color.x == 0 && object[75].color.y == 0)
+								{
+									object[i].texNumber = 13;
+								}
+
+								object[75].color = { 1,1,1,1 };
+								object[75 + 12].color = { 1,1,1,1 };
+							}
+
+							if (rotaX == 1)
+							{
+								//赤
+								if (object[78].color.y == 0 && object[78].color.z == 0)
+								{
+									object[i].texNumber = 11;
+								}
+
+								//緑
+								else if (object[78].color.x == 0 && object[78].color.z == 0)
+								{
+									object[i].texNumber = 12;
+								}
+
+								//青
+								else if (object[78].color.x == 0 && object[78].color.y == 0)
+								{
+									object[i].texNumber = 13;
+								}
+
+								object[78].color = { 1,1,1,1 };
+								object[78 + 12].color = { 1,1,1,1 };
+							}
+
+							if (rotaX == 2)
+							{
+								//赤
+								if (object[76].color.y == 0 && object[76].color.z == 0)
+								{
+									object[i].texNumber = 11;
+								}
+
+								//緑
+								else if (object[76].color.x == 0 && object[76].color.z == 0)
+								{
+									object[i].texNumber = 12;
+								}
+
+								//青
+								else if (object[76].color.x == 0 && object[76].color.y == 0)
+								{
+									object[i].texNumber = 13;
+								}
+
+								object[76].color = { 1,1,1,1 };
+								object[76 + 12].color = { 1,1,1,1 };
+							}
+
+							if (rotaX == 3)
+							{
+								//赤
+								if (object[77].color.y == 0 && object[77].color.z == 0)
+								{
+									object[i].texNumber = 11;
+								}
+
+								//緑
+								else if (object[77].color.x == 0 && object[77].color.z == 0)
+								{
+									object[i].texNumber = 12;
+								}
+
+								//青
+								else if (object[77].color.x == 0 && object[77].color.y == 0)
+								{
+									object[i].texNumber = 13;
+								}
+
+								object[77].color = { 1,1,1,1 };
+								object[77 + 12].color = { 1,1,1,1 };
+							}
 						}
 
-						if (rotaX == 3)
+						if (rotaY == 3 || rotaY == -1)
 						{
-							object[77].color = { 1,0,0,1 };
+							if (rotaX == 0)
+							{
+								//赤
+								if (object[79].color.y == 0 && object[79].color.z == 0)
+								{
+									object[i].texNumber = 11;
+								}
+
+								//緑
+								else if (object[79].color.x == 0 && object[79].color.z == 0)
+								{
+									object[i].texNumber = 12;
+								}
+
+								//青
+								else if (object[79].color.x == 0 && object[79].color.y == 0)
+								{
+									object[i].texNumber = 13;
+								}
+
+								object[79].color = { 1,1,1,1 };
+								object[79 + 12].color = { 1,1,1,1 };
+							}
+
+							if (rotaX == 2)
+							{
+								//赤
+								if (object[79].color.y == 0 && object[79].color.z == 0)
+								{
+									object[i].texNumber = 11;
+								}
+
+								//緑
+								else if (object[79].color.x == 0 && object[79].color.z == 0)
+								{
+									object[i].texNumber = 12;
+								}
+
+								//青
+								else if (object[79].color.x == 0 && object[79].color.y == 0)
+								{
+									object[i].texNumber = 13;
+								}
+
+								object[79].color = { 1,1,1,1 };
+								object[79 + 12].color = { 1,1,1,1 };
+							}
 						}
 					}
 
-					if (rotaY == 1 || rotaY == -3)
+					//地面の色が赤の時
+					else if (object[i].texNumber == 11)
 					{
-						if (rotaX == 0)
+						if (rotaY == 0)
 						{
-							object[80].color = { 1,0,0,1 };
+							if (rotaX == 0 && object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[76].color = { 1,0,0,1 };
+								object[76 + 12].color = { 1,0,0,1 };
+							}
+
+							if (rotaX == 1 && object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[78].color = { 1,0,0,1 };
+								object[78 + 12].color = { 1,0,0,1 };
+							}
+
+							if (rotaX == 2 && object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[75].color = { 1,0,0,1 };
+								object[75 + 12].color = { 1,0,0,1 };
+							}
+
+							if (rotaX == 3 && object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[77].color = { 1,0,0,1 };
+								object[77 + 12].color = { 1,0,0,1 };
+							}
 						}
 
-						if (rotaX == 2)
+						if (rotaY == 1 || rotaY == -3)
 						{
-							object[80].color = { 1,0,0,1 };
+							if (rotaX == 0 && object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[80].color = { 1,0,0,1 };
+								object[80 + 12].color = { 1,0,0,1 };
+							}
+
+							if (rotaX == 2 && object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[80].color = { 1,0,0,1 };
+								object[80 + 12].color = { 1,0,0,1 };
+							}
+						}
+
+						if (abs(rotaY) == 2)
+						{
+							if (rotaX == 0 && object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[75].color = { 1,0,0,1 };
+								object[75 + 12].color = { 1,0,0,1 };
+							}
+
+							if (rotaX == 1 && object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[78].color = { 1,0,0,1 };
+								object[78].color = { 1,0,0,1 };
+							}
+
+							if (rotaX == 2 && object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[76 + 12].color = { 1,0,0,1 };
+							}
+
+							if (rotaX == 3 && object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[77].color = { 1,0,0,1 };
+								object[77 + 12].color = { 1,0,0,1 };
+							}
+						}
+
+						if (rotaY == 3 || rotaY == -1)
+						{
+							if (rotaX == 0 && object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[79].color = { 1,0,0,1 };
+								object[79 + 12].color = { 1,0,0,1 };
+							}
+
+							if (rotaX == 2 && object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[79].color = { 1,0,0,1 };
+								object[79 + 12].color = { 1,0,0,1 };
+							}
 						}
 					}
 
-					if (abs(rotaY) == 2)
+					//地面の色が緑の時
+					else if (object[i].texNumber == 12)
 					{
-						if (rotaX == 0)
+						if (rotaY == 0)
 						{
-							object[75].color = { 1,0,0,1 };
+							if (rotaX == 0 && object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[76].color = { 0,1,0,1 };
+								object[76 + 12].color = { 0,1,0,1 };
+							}
+
+							if (rotaX == 1 && object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[78].color = { 0,1,0,1 };
+								object[78 + 12].color = { 0,1,0,1 };
+							}
+
+							if (rotaX == 2 && object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[75].color = { 0,1,0,1 };
+								object[75 + 12].color = { 0,1,0,1 };
+							}
+
+							if (rotaX == 3 && object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[77].color = { 0,1,0,1 };
+								object[77 + 12].color = { 0,1,0,1 };
+							}
 						}
 
-						if (rotaX == 1)
+						if (rotaY == 1 || rotaY == -3)
 						{
-							object[78].color = { 1,0,0,1 };
+							if (rotaX == 0 && object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[80].color = { 0,1,0,1 };
+								object[80 + 12].color = { 0,1,0,1 };
+							}
+
+							if (rotaX == 2 && object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[80].color = { 0,1,0,1 };
+								object[80 + 12].color = { 0,1,0,1 };
+							}
 						}
 
-						if (rotaX == 2)
+						if (abs(rotaY) == 2)
 						{
-							object[76].color = { 1,0,0,1 };
+							if (rotaX == 0 && object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[75].color = { 0,1,0,1 };
+								object[75 + 12].color = { 0,1,0,1 };
+							}
+
+							if (rotaX == 1 && object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[78].color = { 0,1,0,1 };
+								object[78 + 12].color = { 0,1,0,1 };
+							}
+
+							if (rotaX == 2 && object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[76].color = { 0,1,0,1 };
+								object[76 + 12].color = { 0,1,0,1 };
+							}
+
+							if (rotaX == 3 && object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[77].color = { 0,1,0,1 };
+								object[77 + 12].color = { 0,1,0,1 };
+							}
 						}
 
-						if (rotaX == 3)
+						if (rotaY == 3 || rotaY == -1)
 						{
-							object[77].color = { 1,0,0,1 };
+							if (rotaX == 0 && object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[79].color = { 0,1,0,1 };
+								object[79 + 12].color = { 0,1,0,1 };
+							}
+
+							if (rotaX == 2 && object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[79].color = { 0,1,0,1 };
+								object[79 + 12].color = { 0,1,0,1 };
+							}
 						}
 					}
 
-					if (rotaY == 3 || rotaY == -1)
+					//地面の色が青の時
+					else if (object[i].texNumber == 13)
 					{
-						if (rotaX == 0)
+						if (rotaY == 0)
 						{
-							object[79].color = { 1,0,0,1 };
+							if (rotaX == 0 && object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[76].color = { 0,0,1,1 };
+								object[76 + 12].color = { 0,0,1,1 };
+							}
+
+							if (rotaX == 1 && object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[78].color = { 0,0,1,1 };
+								object[78 + 12].color = { 0,0,1,1 };
+							}
+
+							if (rotaX == 2 && object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[75].color = { 0,0,1,1 };
+								object[75 + 12].color = { 0,0,1,1 };
+							}
+
+							if (rotaX == 3 && object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[77].color = { 0,0,1,1 };
+								object[77 + 12].color = { 0,0,1,1 };
+							}
 						}
 
-						if (rotaX == 2)
+						if (rotaY == 1 || rotaY == -3)
 						{
-							object[79].color = { 1,0,0,1 };
+							if (rotaX == 0 && object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[80].color = { 0,0,1,1 };
+								object[80 + 12].color = { 0,0,1,1 };
+							}
+
+							if (rotaX == 2 && object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[80].color = { 0,0,1,1 };
+								object[80 + 12].color = { 0,0,1,1 };
+							}
+						}
+
+						if (abs(rotaY) == 2)
+						{
+							if (rotaX == 0 && object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[75].color = { 0,0,1,1 };
+								object[75 + 12].color = { 0,0,1,1 };
+							}
+
+							if (rotaX == 1 && object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[78].color = { 0,0,1,1 };
+								object[78 + 12].color = { 0,0,1,1 };
+							}
+
+							if (rotaX == 2 && object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[76].color = { 0,0,1,1 };
+								object[76 + 12].color = { 0,0,1,1 };
+							}
+
+							if (rotaX == 3 && object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[77].color = { 0,0,1,1 };
+								object[77 + 12].color = { 0,0,1,1 };
+							}
+						}
+
+						if (rotaY == 3 || rotaY == -1)
+						{
+							if (rotaX == 0 && object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[79].color = { 0,0,1,1 };
+								object[79 + 12].color = { 0,0,1,1 };
+							}
+
+							if (rotaX == 2 && object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+							{
+								object[i].texNumber = 1;
+								object[79].color = { 0,0,1,1 };
+								object[79 + 12].color = { 0,0,1,1 };
+							}
 						}
 					}
+
+					isHit = false;
 				}
 
-				//地面の色が緑の時
-				if (object[i].texNumber == 12)
+				//ステージ0において、地面のオブジェクトiに数字がついていて、そのブロックの上に乗っているとき
+				if (StageNum == 0 && object[i].position.x == object[75].position.x && object[i].position.y == object[75].position.y
+					&& object[i].texNumber != 1)
 				{
-					if (rotaY == 0)
+					//数字が1の時
+					if (object[i].texNumber == 2)
 					{
-						if (rotaX == 0)
-						{
-							object[76].color = { 0,1,0,1 };
-						}
-
-						if (rotaX == 1)
-						{
-							object[78].color = { 0,1,0,1 };
-						}
-
-						if (rotaX == 2)
-						{
-							object[75].color = { 0,1,0,1 };
-						}
-
-						if (rotaX == 3)
-						{
-							object[77].color = { 0,1,0,1 };
-						}
+						StageNum = 1;
+						isChange = true;
 					}
 
-					if (rotaY == 1 || rotaY == -3)
+					//数字が2の時
+					else if (object[i].texNumber == 3)
 					{
-						if (rotaX == 0)
-						{
-							object[80].color = { 0,1,0,1 };
-						}
-
-						if (rotaX == 2)
-						{
-							object[80].color = { 0,1,0,1 };
-						}
+						StageNum = 2;
+						isChange = true;
 					}
 
-					if (abs(rotaY) == 2)
+					//数字が3の時
+					else if (object[i].texNumber == 4)
 					{
-						if (rotaX == 0)
-						{
-							object[75].color = { 0,1,0,1 };
-						}
-
-						if (rotaX == 1)
-						{
-							object[78].color = { 0,1,0,1 };
-						}
-
-						if (rotaX == 2)
-						{
-							object[76].color = { 0,1,0,1 };
-						}
-
-						if (rotaX == 3)
-						{
-							object[77].color = { 0,1,0,1 };
-						}
+						StageNum = 3;
+						isChange = true;
 					}
 
-					if (rotaY == 3 || rotaY == -1)
+					//数字が4の時
+					else if (object[i].texNumber == 5)
 					{
-						if (rotaX == 0)
-						{
-							object[79].color = { 0,1,0,1 };
-						}
-
-						if (rotaX == 2)
-						{
-							object[79].color = { 0,1,0,1 };
-						}
-					}
-				}
-
-				//地面の色が青の時
-				if (object[i].texNumber == 13)
-				{
-					if (rotaY == 0)
-					{
-						if (rotaX == 0)
-						{
-							object[76].color = { 0,0,1,1 };
-						}
-
-						if (rotaX == 1)
-						{
-							object[78].color = { 0,0,1,1 };
-						}
-
-						if (rotaX == 2)
-						{
-							object[75].color = { 0,0,1,1 };
-						}
-
-						if (rotaX == 3)
-						{
-							object[77].color = { 0,0,1,1 };
-						}
+						StageNum = 4;
+						isChange = true;
 					}
 
-					if (rotaY == 1 || rotaY == -3)
+					//数字が5の時
+					else if (object[i].texNumber == 6)
 					{
-						if (rotaX == 0)
-						{
-							object[80].color = { 0,0,1,1 };
-						}
-
-						if (rotaX == 2)
-						{
-							object[80].color = { 0,0,1,1 };
-						}
+						StageNum = 5;
+						isChange = true;
 					}
 
-					if (abs(rotaY) == 2)
+					//数字が6の時
+					else if (object[i].texNumber == 7)
 					{
-						if (rotaX == 0)
-						{
-							object[75].color = { 0,0,1,1 };
-						}
-
-						if (rotaX == 1)
-						{
-							object[78].color = { 0,0,1,1 };
-						}
-
-						if (rotaX == 2)
-						{
-							object[76].color = { 0,0,1,1 };
-						}
-
-						if (rotaX == 3)
-						{
-							object[77].color = { 0,0,1,1 };
-						}
+						StageNum = 6;
+						isChange = true;
 					}
 
-					if (rotaY == 3 || rotaY == -1)
+					//数字が7の時
+					else if (object[i].texNumber == 8)
 					{
-						if (rotaX == 0)
-						{
-							object[79].color = { 0,0,1,1 };
-						}
-						
-						if (rotaX == 2)
-						{
-							object[79].color = { 0,0,1,1 };
-						}
+						StageNum = 7;
+						isChange = true;
+					}
+
+					//数字が8の時
+					else if (object[i].texNumber == 9)
+					{
+						StageNum = 8;
+						isChange = true;
+					}
+
+					//数字が9の時
+					else if (object[i].texNumber == 10)
+					{
+						StageNum = 9;
+						isChange = true;
 					}
 				}
 			}
-
-			//変更箇所ここから
-			//ステージ0において、地面のオブジェクトiに数字がついていて、そのブロックの上に乗っているとき
-			if (StageNum == 0 && object[i].position.x == object[75].position.x && object[i].position.y == object[75].position.y
-				&& object[i].texNumber != 1)
-			{
-				//数字が1の時
-				if (object[i].texNumber == 2)
-				{
-					StageNum = 1;
-					isChange = true;
-				}
-
-				//数字が2の時
-				else if (object[i].texNumber == 3)
-				{
-					StageNum = 2;
-					isChange = true;
-				}
-
-				//数字が3の時
-				else if (object[i].texNumber == 4)
-				{
-					StageNum = 3;
-					isChange = true;
-				}
-
-				//数字が4の時
-				else if (object[i].texNumber == 5)
-				{
-					StageNum = 4;
-					isChange = true;
-				}
-
-				//数字が5の時
-				else if (object[i].texNumber == 6)
-				{
-					StageNum = 5;
-					isChange = true;
-				}
-
-				//数字が6の時
-				else if (object[i].texNumber == 7)
-				{
-					StageNum = 6;
-					isChange = true;
-				}
-
-				//数字が7の時
-				else if (object[i].texNumber == 8)
-				{
-					StageNum = 7;
-					isChange = true;
-				}
-
-				//数字が8の時
-				else if (object[i].texNumber == 9)
-				{
-					StageNum = 8;
-					isChange = true;
-				}
-
-				//数字が9の時
-				else if (object[i].texNumber == 10)
-				{
-					StageNum = 9;
-					isChange = true;
-				}
-			}
-			//変更箇所ここまで
 		}
 
 		//クリア処理
@@ -1206,7 +1592,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			{
 				if ((object[76].color.x == 0 && object[76].color.y == 0) && (object[77].color.x == 0 && object[77].color.z == 0))
 				{
-					SceneNum = Title;
+					SceneNum = End;
+					isChange = false;//ステージ変更処理
+					isLoad = false;//ロード
+					LoadCount = 20;//ロードのウェイト
+					StageNum = 0;//0はステージセレクト。
+					MoveDirection = Right;//進行方向
+					isLeft = false;//進行方向
+					isRight = false;//進行方向
+					isUp = false;//進行方向
+					isDown = false;//進行方向
+					isRota = false;//回転しているか
+					timer = 0;//回転、移動処理の時間
+					rotaX = 0;//今のXの向き正なら右に負なら左に回転している
+					rotaY = 0;//今のYの向き正なら下に負なら上に回転している
 				}
 			}
 		}
@@ -1249,6 +1648,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		if (SceneNum == Title)
 		{
 			SpriteDraw(sprite[0], cmdList, spriteCommon, DxIni->GetDev());
+		}
+
+		else if (SceneNum == End)
+		{
+			SpriteDraw(sprite[6], cmdList, spriteCommon, DxIni->GetDev());
 		}
 
 		else
