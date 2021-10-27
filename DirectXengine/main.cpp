@@ -552,6 +552,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				object[86].color = { 1,0,0,1 };
 			}
 
+			else if (StageNum == 5)
+			{
+				object[81].color = { 0,0,1,1 };
+				object[82].color = { 0,0,1,1 };//青
+				object[83].color = { 0,1,0,1 };//赤
+				object[84].color = { 0,1,0,1 };//赤
+				object[85].color = { 1,0,0,1 };//緑
+				object[86].color = { 1,0,0,1 };
+			}
+
+			else if (StageNum == 6)
+			{
+				object[81].color = { 0,0,1,1 };
+				object[82].color = { 0,0,1,1 };//青
+				object[83].color = { 0,1,0,1 };//赤
+				object[84].color = { 0,1,0,1 };//赤
+				object[85].color = { 1,0,0,1 };//緑
+				object[86].color = { 1,0,0,1 };
+			}
 			//背景の更新
 			sprite[1].position = { sprite[0].position.x, sprite[0].position.y, 0 };
 
@@ -1131,6 +1150,215 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				isChange = false;
 			}
 
+			else if (StageNum == 5)
+			{
+			object[1].position = { -70, 20, 0 };
+			object[2].position = { -60, 20, 0 };
+			object[3].position = { -50, 20, 0 };
+			object[4].position = { -40, 20, 0 };
+			object[5].position = { -30, 20, 0 };
+			object[6].position = { -20, 20, 0 };
+			object[7].position = { -10, 20, 0 };
+			object[8].position = { -70, 10, 0 };
+			object[9].position = { -50, 10, 0 };
+			object[10].position = { -30, 10, 0 };
+			object[11].position = { -10, 10, 0 };
+			object[12].position = { -70, 0, 0 };
+			object[13].position = { -60, 0, 0 };
+			object[14].position = { -50, 0, 0 };
+			object[15].position = { -40, 0, 0 };
+			object[16].position = { -30, 0, 0 };
+			object[17].position = { -20, 0, 0 };
+			object[18].position = { -10, 0, 0 };
+			object[19].position = { -70, -10, 0 };
+			object[20].position = { -50, -10, 0 };
+			object[21].position = { -30, -10, 0 };
+			object[22].position = { -10, -10, 0 };
+			object[23].position = { -70, -20, 0 };
+			object[24].position = { -60, -20, 0 };
+			object[25].position = { -50, -20, 0 };
+			object[26].position = { -40, -20, 0 };
+			object[27].position = { -30, -20, 0 };
+			object[28].position = { -20, -20, 0 };
+			object[29].position = { -10, -20, 0 };
+
+			object[1].texNumber = 1;
+			object[2].texNumber = 12;
+			object[3].texNumber = 1;
+			object[4].texNumber = 1;
+			object[5].texNumber = 1;
+			object[6].texNumber = 12;
+			object[7].texNumber = 1;
+			object[8].texNumber = 11;
+			object[9].texNumber = 1;
+			object[10].texNumber = 13;
+			object[11].texNumber = 1;
+			object[12].texNumber = 12;
+			object[13].texNumber = 1;
+			object[14].texNumber = 13;
+			object[15].texNumber = 1;
+			object[16].texNumber = 1;
+			object[17].texNumber = 11;
+			object[18].texNumber = 1;
+			object[19].texNumber = 12;
+			object[20].texNumber = 11;
+			object[21].texNumber = 1;
+			object[22].texNumber = 1;
+			object[23].texNumber = 1;
+			object[24].texNumber = 13;
+			object[25].texNumber = 1;
+			object[26].texNumber = 12;
+			object[27].texNumber = 11;
+			object[28].texNumber = 1;
+			object[29].texNumber = 13;
+
+			//いらないブロックには認識の外側に消えていただく
+			for (int i = 30; i < 73; i++)
+			{
+				object[i].position = { 1000, 1000, 1000 };
+			}
+
+			//プレイヤー
+			for (int i = 75; i < 81; i++)
+			{
+				object[i].color = { 1,1,1,1 };
+				rotaX = 0;
+				rotaY = 0;
+				rotaXCount = 0;
+				rotaYCount = 0;
+				object[i].rotation = { 0, 0, 0 };
+				object[i].position.x = object[1].position.x;
+				object[i].position.y = object[1].position.y;
+			}
+
+			for (int i = 87; i < 93; i++)
+			{
+				object[i].color = { 1,1,1,1 };
+			}
+
+			maxRotaX = 6;
+			maxRotaY = 0;
+			minRotaX = 0;
+			minRotaY = -4;
+			MaxBlock = 30;//ステージの最大ブロック数を指定
+			isChange = false;
+			}
+
+			else if (StageNum == 6)
+			{
+			object[1].position = { -70, 30, 0 };
+			object[2].position = { -60, 30, 0 };
+			object[3].position = { -50, 30, 0 };
+			object[4].position = { -40, 30, 0 };
+			object[5].position = { -30, 30, 0 };
+			object[6].position = { -20, 30, 0 };
+			object[7].position = { -10, 30, 0 };
+			object[8].position = { -70, 20, 0 };
+			object[9].position = { -50, 20, 0 };
+			object[10].position = { -30, 20, 0 };
+			object[11].position = { -10, 20, 0 };
+			object[12].position = { -70, 10, 0 };
+			object[13].position = { -60, 10, 0 };
+			object[14].position = { -50, 10, 0 };
+			object[15].position = { -40, 10, 0 };
+			object[16].position = { -30, 10, 0 };
+			object[17].position = { -20, 10, 0 };
+			object[18].position = { -10, 10, 0 };
+			object[19].position = { -70, 0, 0 };
+			object[20].position = { -50, 0, 0 };
+			object[21].position = { -30, 0, 0 };
+			object[22].position = { -10, 0, 0 };
+			object[23].position = { -70, -10, 0 };
+			object[24].position = { -60, -10, 0 };
+			object[25].position = { -50, -10, 0 };
+			object[26].position = { -40, -10, 0 };
+			object[27].position = { -30, -10, 0 };
+			object[28].position = { -20, -10, 0 };
+			object[29].position = { -10, -10, 0 };
+			object[30].position = { -70, -20, 0 };
+			object[31].position = { -50, -20, 0 };
+			object[32].position = { -30, -20, 0 };
+			object[33].position = { -10, -20, 0 };
+			object[34].position = { -70, -30, 0 };
+			object[35].position = { -60, -30, 0 };
+			object[36].position = { -50, -30, 0 };
+			object[37].position = { -40, -30, 0 };
+			object[38].position = { -30, -30, 0 };
+			object[39].position = { -20, -30, 0 };
+			object[40].position = { -10, -30, 0 };
+
+			object[1].texNumber = 1;
+			object[2].texNumber = 13;
+			object[3].texNumber = 1;
+			object[4].texNumber = 12;
+			object[5].texNumber = 1;
+			object[6].texNumber = 13;
+			object[7].texNumber = 1;
+			object[8].texNumber = 11;
+			object[9].texNumber = 1;
+			object[10].texNumber = 12;
+			object[11].texNumber = 1;
+			object[12].texNumber = 11;
+			object[13].texNumber = 12;
+			object[14].texNumber = 1;
+			object[15].texNumber = 1;
+			object[16].texNumber = 13;
+			object[17].texNumber = 1;
+			object[18].texNumber = 12;
+			object[19].texNumber = 1;
+			object[20].texNumber = 1;
+			object[21].texNumber = 11;
+			object[22].texNumber = 1;
+			object[23].texNumber = 12;
+			object[24].texNumber = 1;
+			object[25].texNumber = 1;
+			object[26].texNumber = 12;
+			object[27].texNumber = 1;
+			object[28].texNumber = 1;
+			object[29].texNumber = 11;
+			object[30].texNumber = 1;
+			object[31].texNumber = 1;
+			object[32].texNumber = 13;
+			object[33].texNumber = 1;
+			object[34].texNumber = 11;
+			object[35].texNumber = 1;
+			object[36].texNumber = 13;
+			object[37].texNumber = 1;
+			object[38].texNumber = 1;
+			object[39].texNumber = 1;
+			object[40].texNumber = 12;
+
+			//いらないブロックには認識の外側に消えていただく
+			for (int i = 41; i < 73; i++)
+			{
+				object[i].position = { 1000, 1000, 1000 };
+			}
+
+			//プレイヤー
+			for (int i = 75; i < 81; i++)
+			{
+				object[i].color = { 1,1,1,1 };
+				rotaX = 0;
+				rotaY = 0;
+				rotaXCount = 0;
+				rotaYCount = 0;
+				object[i].rotation = { 0, 0, 0 };
+				object[i].position.x = object[1].position.x;
+				object[i].position.y = object[1].position.y;
+			}
+
+			for (int i = 87; i < 93; i++)
+			{
+				object[i].color = { 1,1,1,1 };
+			}
+
+			maxRotaX = 6;
+			maxRotaY = 0;
+			minRotaX = 0;
+			minRotaY = -6;
+			MaxBlock = 41;//ステージの最大ブロック数を指定
+			isChange = false;
+			}
 			//else ifでStageNumの条件式を追加
 
 			else
