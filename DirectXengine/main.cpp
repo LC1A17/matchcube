@@ -174,7 +174,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	objectCommon = ObjectCommonCreate(DxIni->GetDev(), WindowsInitialize::WIN_WIDTH, WindowsInitialize::WIN_HEIGHT);
 
 	//テクスチャ読み込み
-	ObjectCommonLoadTexture(objectCommon, 0, L"Resource/image/tjmt.png", DxIni->GetDev());
+	ObjectCommonLoadTexture(objectCommon, 0, L"Resource/image/Floor.png", DxIni->GetDev());
 	ObjectCommonLoadTexture(objectCommon, 1, L"Resource/image/Floor.png", DxIni->GetDev());
 	ObjectCommonLoadTexture(objectCommon, 2, L"Resource/image/Stage1.png", DxIni->GetDev());
 	ObjectCommonLoadTexture(objectCommon, 3, L"Resource/image/Stage2.png", DxIni->GetDev());
@@ -342,10 +342,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	object[71].position = { -70, 30, 0 };//ステージ8
 	object[72].position = { -70, 30, 0 };//ステージ9
 
-	//消された辻本
+	//死
 	object[73].position = { 80, 30, 0 };
 	object[74].position = { 80, -10, 0 };
-	
+
 	//見本と現在形
 	for (int i = 81; i < 87; i++)
 	{
@@ -514,19 +514,42 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		{
 			if (StageNum == 1)
 			{
-				object[82].color = { 0,0,1,1 };
-				object[83].color = { 0,1,0,1 };
-				object[84].color = { 1,0,0,1 };
+				object[81].color = { 1,1,1,1 };
+				object[82].color = { 0,0,1,1 };//赤
+				object[83].color = { 0,1,0,1 };//緑
+				object[84].color = { 1,0,0,1 };//青
+				object[85].color = { 1,1,1,1 };
+				object[86].color = { 1,1,1,1 };
 			}
 
 			else if (StageNum == 2)
 			{
-				//ここに見本の色を入力
+				object[81].color = { 1,1,1,1 };
+				object[82].color = { 0,0,1,1 };//青
+				object[83].color = { 1,0,0,1 };//赤
+				object[84].color = { 1,1,1,1 };
+				object[85].color = { 0,1,0,1 };//緑
+				object[86].color = { 1,1,1,1 };
 			}
 
 			else if (StageNum == 3)
 			{
-				//ここに見本の色を入力
+				object[81].color = { 0,1,0,1 };
+				object[82].color = { 0,1,0,1 };//青
+				object[83].color = { 1,0,0,1 };//赤
+				object[84].color = { 1,0,0,1 };//赤
+				object[85].color = { 1,1,1,1 };//緑
+				object[86].color = { 0,0,1,1 };
+			}
+
+			else if (StageNum == 4)
+			{
+				object[81].color = { 0,0,1,1 };
+				object[82].color = { 0,0,1,1 };//青
+				object[83].color = { 0,1,0,1 };//赤
+				object[84].color = { 0,1,0,1 };//赤
+				object[85].color = { 1,0,0,1 };//緑
+				object[86].color = { 1,0,0,1 };
 			}
 
 			//背景の更新
@@ -796,19 +819,31 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		{
 			if (StageNum == 0)
 			{
-				object[1].position = { -30, 0, 0 };
-				object[64].position = { -30, 10, 0 };//ステージ1
-				object[65].position = { -30, -10, 0 };//ステージ2
-				object[66].position = { -70, 30, 0 };//ステージ3
-				object[67].position = { -70, 30, 0 };//ステージ4
-				object[68].position = { -70, 30, 0 };//ステージ5
-				object[69].position = { -70, 30, 0 };//ステージ6
-				object[70].position = { -70, 30, 0 };//ステージ7
-				object[71].position = { -70, 30, 0 };//ステージ8
-				object[72].position = { -70, 30, 0 };//ステージ9
+				object[1].position = { -70, 0, 0 };
+				object[2].position = { -60, 0, 0 };
+				object[3].position = { -50, 0, 0 };
+				object[4].position = { -40, 0, 0 };
+				object[5].position = { -30, 0, 0 };
+				object[6].position = { -20, 0, 0 };
+				object[7].position = { -10, 0, 0 };
+
+				object[1].texNumber = 1;
+				object[2].texNumber = 1;
+				object[3].texNumber = 1;
+				object[4].texNumber = 1;
+				object[5].texNumber = 1;
+				object[64].position = { -70, 10, 0 };//ステージ1
+				object[65].position = { -70, -10, 0 };//ステージ2
+				object[66].position = { -50, 10, 0 };//ステージ3
+				object[67].position = { -50, -10, 0 };//ステージ4
+				object[68].position = { -30, 10, 0 };//ステージ5
+				object[69].position = { -30, -10, 0 };//ステージ6
+				object[70].position = { -10, 10, 0 };//ステージ7
+				object[71].position = { -10, -10, 0 };//ステージ8
+				object[72].position = { 1000, 1000, 0 };//ステージ9
 
 				//いらないブロックには認識の外側に消えていただく
-				for (int i = 2; i < 64; i++)
+				for (int i = 8; i < 64; i++)
 				{
 					object[i].position = { 1000, 1000, 1000 };
 				}
@@ -831,6 +866,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					object[i].color = { 1,1,1,1 };
 				}
 
+				maxRotaX = 7;
+				maxRotaY = 1;
+				minRotaX = 0;
+				minRotaY = -1;
 				MaxBlock = 73;//ステージの最大ブロック数を指定
 				isChange = false;
 			}
@@ -880,31 +919,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				MaxBlock = 6;//ステージの最大ブロック数を指定
 				isChange = false;
 			}
-
 			else if (StageNum == 2)
 			{
-				object[1].position = { -50, 0, 0 };
-				object[2].position = { -40, 0, 0 };
-				object[3].position = { -30, 0, 0 };
-				object[4].position = { -20, 0, 0 };
-				object[5].position = { -10, 0, 0 };
-				object[6].position = { -50, -20, 0 };
-				object[7].position = { -40, -20, 0 };
-				object[8].position = { -30, -20, 0 };
-				object[9].position = { -20, -20, 0 };
-				object[10].position = { -10, -20, 0 };
-				object[11].position = { -50, 20, 0 };
-				object[12].position = { -40, 20, 0 };
-				object[13].position = { -30, 20, 0 };
-				object[14].position = { -20, 20, 0 };
-				object[15].position = { -10, 20, 0 };
-				object[16].position = { -50, 10, 0 };
-				object[17].position = { -30, 10, 0 };
-				object[18].position = { -10, 10, 0 };
-				object[19].position = { -50, -10, 0 };
-				object[20].position = { -30, -10, 0 };
-				object[21].position = { -10, -10, 0 };
-				
+				object[1].position = { -50, -20, 0 };
+				object[2].position = { -40, -20, 0 };
+				object[3].position = { -30, -20, 0 };
+				object[4].position = { -20, -20, 0 };
+				object[5].position = { -10, -20, 0 };
+				object[6].position = { -50, -10, 0 };
+				object[7].position = { -30, -10, 0 };
+				object[8].position = { -10, -10, 0 };
+				object[9].position = { -50, 0, 0 };
+				object[10].position = { -40, 0, 0 };
+				object[11].position = { -30, 0, 0 };
+				object[12].position = { -20, 0, 0 };
+				object[13].position = { -10, 0, 0 };
+
 				object[1].texNumber = 1;
 				object[2].texNumber = 11;
 				object[3].texNumber = 1;
@@ -917,14 +947,156 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				object[10].texNumber = 1;
 				object[11].texNumber = 1;
 				object[12].texNumber = 1;
-				object[13].texNumber = 11;
+				object[13].texNumber = 13;
+
+				//いらないブロックには認識の外側に消えていただく
+				for (int i = 14; i < 73; i++)
+				{
+					object[i].position = { 1000, 1000, 1000 };
+				}
+
+				//プレイヤー
+				for (int i = 75; i < 81; i++)
+				{
+					object[i].color = { 1,1,1,1 };
+					rotaX = 0;
+					rotaY = 0;
+					rotaXCount = 0;
+					rotaYCount = 0;
+					object[i].rotation = { 0, 0, 0 };
+					object[i].position.x = object[3].position.x;
+					object[i].position.y = object[3].position.y;
+				}
+
+				for (int i = 87; i < 93; i++)
+				{
+					object[i].color = { 1,1,1,1 };
+				}
+
+				maxRotaX = 2;
+				maxRotaY = 2;
+				minRotaX = -2;
+				minRotaY = 0;
+				MaxBlock = 14;//ステージの最大ブロック数を指定
+				isChange = false;
+			}
+
+			else if (StageNum == 3)
+			{
+				object[1].position = { -70, 0, 0 };
+				object[2].position = { -60, 0, 0 };
+				object[3].position = { -50, 0, 0 };
+				object[4].position = { -40, 0, 0 };
+				object[5].position = { -30, 0, 0 };
+				object[6].position = { -20, 0, 0 };
+				object[7].position = { -10, 0, 0 };
+				object[8].position = { -70, -10, 0 };
+				object[9].position = { -50, -10, 0 };
+				object[10].position = { -30, -10, 0 };
+				object[11].position = { -10, -10, 0 };
+				object[12].position = { -70, -20, 0 };
+				object[13].position = { -60, -20, 0 };
+				object[14].position = { -50, -20, 0 };
+				object[15].position = { -40, -20, 0 };
+				object[16].position = { -30, -20, 0 };
+				object[17].position = { -20, -20, 0 };
+				object[18].position = { -10, -20, 0 };
+
+				object[1].texNumber = 1;
+				object[2].texNumber = 11;
+				object[3].texNumber = 1;
+				object[4].texNumber = 1;
+				object[5].texNumber = 1;
+				object[6].texNumber = 1;
+				object[7].texNumber = 13;
+				object[8].texNumber = 1;
+				object[9].texNumber = 1;
+				object[10].texNumber = 13;
+				object[11].texNumber = 1;
+				object[12].texNumber = 12;
+				object[13].texNumber = 1;
 				object[14].texNumber = 1;
-				object[15].texNumber = 1;
+				object[15].texNumber = 11;
 				object[16].texNumber = 1;
+				object[17].texNumber = 1;
+				object[18].texNumber = 12;
+
+				//いらないブロックには認識の外側に消えていただく
+				for (int i = 19; i < 73; i++)
+				{
+					object[i].position = { 1000, 1000, 1000 };
+				}
+
+				//プレイヤー
+				for (int i = 75; i < 81; i++)
+				{
+					object[i].color = { 1,1,1,1 };
+					rotaX = 0;
+					rotaY = 0;
+					rotaXCount = 0;
+					rotaYCount = 0;
+					object[i].rotation = { 0, 0, 0 };
+					object[i].position.x = object[3].position.x;
+					object[i].position.y = object[3].position.y;
+				}
+
+				for (int i = 87; i < 93; i++)
+				{
+					object[i].color = { 1,1,1,1 };
+				}
+
+				maxRotaX = 4;
+				maxRotaY = 0;
+				minRotaX = -2;
+				minRotaY = -2;
+				MaxBlock = 19;//ステージの最大ブロック数を指定
+				isChange = false;
+			}
+
+			else if (StageNum == 4)
+			{
+				object[1].position = { -50, 20, 0 };
+				object[2].position = { -40, 20, 0 };
+				object[3].position = { -30, 20, 0 };
+				object[4].position = { -20, 20, 0 };
+				object[5].position = { -10, 20, 0 };
+				object[6].position = { -50, 10, 0 };
+				object[7].position = { -30, 10, 0 };
+				object[8].position = { -10, 10, 0 };
+				object[9].position = { -50, 0, 0 };
+				object[10].position = { -40, 0, 0 };
+				object[11].position = { -30, 0, 0 };
+				object[12].position = { -20, 0, 0 };
+				object[13].position = { -10, 0, 0 };
+				object[14].position = { -50, -10, 0 };
+				object[15].position = { -30, -10, 0 };
+				object[16].position = { -10, -10, 0 };
+				object[17].position = { -50, -20, 0 };
+				object[18].position = { -40, -20, 0 };
+				object[19].position = { -30, -20, 0 };
+				object[20].position = { -20, -20, 0 };
+				object[21].position = { -10, -20, 0 };
+
+				object[1].texNumber = 13;
+				object[2].texNumber = 12;
+				object[3].texNumber = 1;
+				object[4].texNumber = 1;
+				object[5].texNumber = 1;
+				object[6].texNumber = 1;
+				object[7].texNumber = 12;
+				object[8].texNumber = 11;
+				object[9].texNumber = 1;
+				object[10].texNumber = 13;
+				object[11].texNumber = 1;
+				object[12].texNumber = 11;
+				object[13].texNumber = 11;
+				object[14].texNumber = 11;
+				object[15].texNumber = 1;
+				object[16].texNumber = 11;
 				object[17].texNumber = 1;
 				object[18].texNumber = 1;
 				object[19].texNumber = 13;
-				object[20].texNumber = 1;
+				object[20].texNumber = 12;
 				object[21].texNumber = 1;
 
 				//いらないブロックには認識の外側に消えていただく
@@ -942,8 +1114,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					rotaXCount = 0;
 					rotaYCount = 0;
 					object[i].rotation = { 0, 0, 0 };
-					object[i].position.x = object[3].position.x;
-					object[i].position.y = object[3].position.y;
+					object[i].position.x = object[11].position.x;
+					object[i].position.y = object[11].position.y;
 				}
 
 				for (int i = 87; i < 93; i++)
@@ -1006,7 +1178,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 								object[76 + 12].color = { 1,1,1,1 };
 							}
 
-							if (rotaX == 1)
+							if (rotaX == 1 || rotaX == -3)
 							{
 								//赤
 								if (object[78].color.y == 0 && object[78].color.z == 0)
@@ -1030,7 +1202,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 								object[78 + 12].color = { 1,1,1,1 };
 							}
 
-							if (rotaX == 2)
+							if (abs(rotaX) == 2)
 							{
 								//赤
 								if (object[75].color.y == 0 && object[75].color.z == 0)
@@ -1054,7 +1226,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 								object[75 + 12].color = { 1,1,1,1 };
 							}
 
-							if (rotaX == 3)
+							if (rotaX == 3 || rotaX == -1)
 							{
 								//赤
 								if (object[77].color.y == 0 && object[77].color.z == 0)
@@ -1084,49 +1256,49 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 							if (rotaX == 0)
 							{
 								//赤
-								if (object[80].color.y == 0 && object[80].color.z == 0)
+								if (object[79].color.y == 0 && object[79].color.z == 0)
 								{
 									object[i].texNumber = 11;
 								}
 
 								//緑
-								else if (object[80].color.x == 0 && object[80].color.z == 0)
+								else if (object[79].color.x == 0 && object[79].color.z == 0)
 								{
 									object[i].texNumber = 12;
 								}
 
 								//青
-								else if (object[80].color.x == 0 && object[80].color.y == 0)
+								else if (object[79].color.x == 0 && object[79].color.y == 0)
 								{
 									object[i].texNumber = 13;
 								}
 
-								object[80].color = { 1,1,1,1 };
-								object[80 + 12].color = { 1,1,1,1 };
+								object[79].color = { 1,1,1,1 };
+								object[79 + 12].color = { 1,1,1,1 };
 							}
 
-							if (rotaX == 2)
+							if (abs(rotaX) == 2)
 							{
 								//赤
-								if (object[80].color.y == 0 && object[80].color.z == 0)
+								if (object[79].color.y == 0 && object[79].color.z == 0)
 								{
 									object[i].texNumber = 11;
 								}
 
 								//緑
-								else if (object[80].color.x == 0 && object[80].color.z == 0)
+								else if (object[79].color.x == 0 && object[79].color.z == 0)
 								{
 									object[i].texNumber = 12;
 								}
 
 								//青
-								else if (object[80].color.x == 0 && object[80].color.y == 0)
+								else if (object[79].color.x == 0 && object[79].color.y == 0)
 								{
 									object[i].texNumber = 13;
 								}
 
-								object[80].color = { 1,1,1,1 };
-								object[80 + 12].color = { 1,1,1,1 };
+								object[79].color = { 1,1,1,1 };
+								object[79 + 12].color = { 1,1,1,1 };
 							}
 						}
 
@@ -1156,7 +1328,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 								object[75 + 12].color = { 1,1,1,1 };
 							}
 
-							if (rotaX == 1)
+							if (rotaX == 1 || rotaX == -3)
 							{
 								//赤
 								if (object[78].color.y == 0 && object[78].color.z == 0)
@@ -1180,7 +1352,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 								object[78 + 12].color = { 1,1,1,1 };
 							}
 
-							if (rotaX == 2)
+							if (abs(rotaX) == 2)
 							{
 								//赤
 								if (object[76].color.y == 0 && object[76].color.z == 0)
@@ -1204,7 +1376,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 								object[76 + 12].color = { 1,1,1,1 };
 							}
 
-							if (rotaX == 3)
+							if (rotaX == 3 || rotaX == -1)
 							{
 								//赤
 								if (object[77].color.y == 0 && object[77].color.z == 0)
@@ -1234,49 +1406,49 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 							if (rotaX == 0)
 							{
 								//赤
-								if (object[79].color.y == 0 && object[79].color.z == 0)
+								if (object[80].color.y == 0 && object[80].color.z == 0)
 								{
 									object[i].texNumber = 11;
 								}
 
 								//緑
-								else if (object[79].color.x == 0 && object[79].color.z == 0)
+								else if (object[80].color.x == 0 && object[80].color.z == 0)
 								{
 									object[i].texNumber = 12;
 								}
 
 								//青
-								else if (object[79].color.x == 0 && object[79].color.y == 0)
+								else if (object[80].color.x == 0 && object[80].color.y == 0)
 								{
 									object[i].texNumber = 13;
 								}
 
-								object[79].color = { 1,1,1,1 };
-								object[79 + 12].color = { 1,1,1,1 };
+								object[80].color = { 1,1,1,1 };
+								object[80 + 12].color = { 1,1,1,1 };
 							}
 
-							if (rotaX == 2)
+							if (abs(rotaX) == 2)
 							{
 								//赤
-								if (object[79].color.y == 0 && object[79].color.z == 0)
+								if (object[80].color.y == 0 && object[80].color.z == 0)
 								{
 									object[i].texNumber = 11;
 								}
 
 								//緑
-								else if (object[79].color.x == 0 && object[79].color.z == 0)
+								else if (object[80].color.x == 0 && object[80].color.z == 0)
 								{
 									object[i].texNumber = 12;
 								}
 
 								//青
-								else if (object[79].color.x == 0 && object[79].color.y == 0)
+								else if (object[80].color.x == 0 && object[80].color.y == 0)
 								{
 									object[i].texNumber = 13;
 								}
 
-								object[79].color = { 1,1,1,1 };
-								object[79 + 12].color = { 1,1,1,1 };
+								object[80].color = { 1,1,1,1 };
+								object[80 + 12].color = { 1,1,1,1 };
 							}
 						}
 					}
@@ -1286,96 +1458,130 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					{
 						if (rotaY == 0)
 						{
-							if (rotaX == 0 && object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+							if (rotaX == 0)
 							{
-								object[i].texNumber = 1;
-								object[76].color = { 1,0,0,1 };
-								object[76 + 12].color = { 1,0,0,1 };
+								if (object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[76].color = { 1,0,0,1 };
+									object[76 + 12].color = { 1,0,0,1 };
+								}
 							}
 
-							if (rotaX == 1 && object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+							if (rotaX == 1 || rotaX == -3)
 							{
-								object[i].texNumber = 1;
-								object[78].color = { 1,0,0,1 };
-								object[78 + 12].color = { 1,0,0,1 };
+								if (object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[78].color = { 1,0,0,1 };
+									object[78 + 12].color = { 1,0,0,1 };
+								}
 							}
 
-							if (rotaX == 2 && object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+							if (abs(rotaX) == 2)
 							{
-								object[i].texNumber = 1;
-								object[75].color = { 1,0,0,1 };
-								object[75 + 12].color = { 1,0,0,1 };
+								if (object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[75].color = { 1,0,0,1 };
+									object[75 + 12].color = { 1,0,0,1 };
+								}
 							}
 
-							if (rotaX == 3 && object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+							if (rotaX == 3 || rotaX == -1)
 							{
-								object[i].texNumber = 1;
-								object[77].color = { 1,0,0,1 };
-								object[77 + 12].color = { 1,0,0,1 };
+								if (object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[77].color = { 1,0,0,1 };
+									object[77 + 12].color = { 1,0,0,1 };
+								}
 							}
 						}
 
 						if (rotaY == 1 || rotaY == -3)
 						{
-							if (rotaX == 0 && object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+							if (rotaX == 0)
 							{
-								object[i].texNumber = 1;
-								object[80].color = { 1,0,0,1 };
-								object[80 + 12].color = { 1,0,0,1 };
+								if (object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[79].color = { 1,0,0,1 };
+									object[79 + 12].color = { 1,0,0,1 };
+								}
 							}
 
-							if (rotaX == 2 && object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+							if (abs(rotaX) == 2)
 							{
-								object[i].texNumber = 1;
-								object[80].color = { 1,0,0,1 };
-								object[80 + 12].color = { 1,0,0,1 };
+								if (object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[79].color = { 1,0,0,1 };
+									object[79 + 12].color = { 1,0,0,1 };
+								}
 							}
 						}
 
 						if (abs(rotaY) == 2)
 						{
-							if (rotaX == 0 && object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+							if (rotaX == 0)
 							{
-								object[i].texNumber = 1;
-								object[75].color = { 1,0,0,1 };
-								object[75 + 12].color = { 1,0,0,1 };
+								if (object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[75].color = { 1,0,0,1 };
+									object[75 + 12].color = { 1,0,0,1 };
+								}
 							}
-
-							if (rotaX == 1 && object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+							if (rotaX == 1 || rotaX == -3)
 							{
-								object[i].texNumber = 1;
-								object[78].color = { 1,0,0,1 };
-								object[78].color = { 1,0,0,1 };
+								if (object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[78].color = { 1,0,0,1 };
+									object[78 + 12].color = { 1,0,0,1 };
+								}
 							}
-
-							if (rotaX == 2 && object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+							if (abs(rotaX) == 2)
 							{
-								object[i].texNumber = 1;
-								object[76 + 12].color = { 1,0,0,1 };
+								if (object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[76].color = { 1,0,0,1 };
+									object[76 + 12].color = { 1,0,0,1 };
+								}
 							}
-
-							if (rotaX == 3 && object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+							if (rotaX == 3 || rotaX == -1)
 							{
-								object[i].texNumber = 1;
-								object[77].color = { 1,0,0,1 };
-								object[77 + 12].color = { 1,0,0,1 };
+								if (object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[77].color = { 1,0,0,1 };
+									object[77 + 12].color = { 1,0,0,1 };
+								}
 							}
 						}
 
 						if (rotaY == 3 || rotaY == -1)
 						{
-							if (rotaX == 0 && object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+							if (rotaX == 0)
 							{
-								object[i].texNumber = 1;
-								object[79].color = { 1,0,0,1 };
-								object[79 + 12].color = { 1,0,0,1 };
+								if (object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[80].color = { 1,0,0,1 };
+									object[80 + 12].color = { 1,0,0,1 };
+								}
 							}
 
-							if (rotaX == 2 && object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+							if (abs(rotaX) == 2)
 							{
-								object[i].texNumber = 1;
-								object[79].color = { 1,0,0,1 };
-								object[79 + 12].color = { 1,0,0,1 };
+								if (object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[80].color = { 1,0,0,1 };
+									object[80 + 12].color = { 1,0,0,1 };
+								}
 							}
 						}
 					}
@@ -1385,97 +1591,126 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					{
 						if (rotaY == 0)
 						{
-							if (rotaX == 0 && object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+							if (rotaX == 0)
 							{
-								object[i].texNumber = 1;
-								object[76].color = { 0,1,0,1 };
-								object[76 + 12].color = { 0,1,0,1 };
+								if (object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[76].color = { 0,1,0,1 };
+									object[76 + 12].color = { 0,1,0,1 };
+								}
 							}
 
-							if (rotaX == 1 && object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+							if (rotaX == 1 || rotaX == -3)
 							{
-								object[i].texNumber = 1;
-								object[78].color = { 0,1,0,1 };
-								object[78 + 12].color = { 0,1,0,1 };
+								if (object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[78].color = { 0,1,0,1 };
+									object[78 + 12].color = { 0,1,0,1 };
+								}
 							}
-
-							if (rotaX == 2 && object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+							if (abs(rotaX) == 2)
 							{
-								object[i].texNumber = 1;
-								object[75].color = { 0,1,0,1 };
-								object[75 + 12].color = { 0,1,0,1 };
+								if (object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[75].color = { 0,1,0,1 };
+									object[75 + 12].color = { 0,1,0,1 };
+								}
 							}
-
-							if (rotaX == 3 && object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+							if (rotaX == 3 || rotaX == -1)
 							{
-								object[i].texNumber = 1;
-								object[77].color = { 0,1,0,1 };
-								object[77 + 12].color = { 0,1,0,1 };
+								if (object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[77].color = { 0,1,0,1 };
+									object[77 + 12].color = { 0,1,0,1 };
+								}
 							}
 						}
 
 						if (rotaY == 1 || rotaY == -3)
 						{
-							if (rotaX == 0 && object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+							if (rotaX == 0)
 							{
-								object[i].texNumber = 1;
-								object[80].color = { 0,1,0,1 };
-								object[80 + 12].color = { 0,1,0,1 };
+								if (object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[79].color = { 0,1,0,1 };
+									object[79 + 12].color = { 0,1,0,1 };
+								}
 							}
-
-							if (rotaX == 2 && object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+							if (abs(rotaX) == 2)
 							{
-								object[i].texNumber = 1;
-								object[80].color = { 0,1,0,1 };
-								object[80 + 12].color = { 0,1,0,1 };
+								if (object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[79].color = { 0,1,0,1 };
+									object[79 + 12].color = { 0,1,0,1 };
+								}
 							}
 						}
 
 						if (abs(rotaY) == 2)
 						{
-							if (rotaX == 0 && object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+							if (rotaX == 0)
 							{
-								object[i].texNumber = 1;
-								object[75].color = { 0,1,0,1 };
-								object[75 + 12].color = { 0,1,0,1 };
+								if (object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[75].color = { 0,1,0,1 };
+									object[75 + 12].color = { 0,1,0,1 };
+								}
 							}
-
-							if (rotaX == 1 && object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+							if (rotaX == 1 || rotaX == -3)
 							{
-								object[i].texNumber = 1;
-								object[78].color = { 0,1,0,1 };
-								object[78 + 12].color = { 0,1,0,1 };
+								if (object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[78].color = { 0,1,0,1 };
+									object[78 + 12].color = { 0,1,0,1 };
+								}
 							}
-
-							if (rotaX == 2 && object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+							if (abs(rotaX) == 2)
 							{
-								object[i].texNumber = 1;
-								object[76].color = { 0,1,0,1 };
-								object[76 + 12].color = { 0,1,0,1 };
+								if (object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[76].color = { 0,1,0,1 };
+									object[76 + 12].color = { 0,1,0,1 };
+								}
 							}
-
-							if (rotaX == 3 && object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+							if (rotaX == 3 || rotaX == -1)
 							{
-								object[i].texNumber = 1;
-								object[77].color = { 0,1,0,1 };
-								object[77 + 12].color = { 0,1,0,1 };
+								if (object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[77].color = { 0,1,0,1 };
+									object[77 + 12].color = { 0,1,0,1 };
+								}
 							}
 						}
 
 						if (rotaY == 3 || rotaY == -1)
 						{
-							if (rotaX == 0 && object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+							if (rotaX == 0)
 							{
-								object[i].texNumber = 1;
-								object[79].color = { 0,1,0,1 };
-								object[79 + 12].color = { 0,1,0,1 };
+								if (object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[80].color = { 0,1,0,1 };
+									object[80 + 12].color = { 0,1,0,1 };
+								}
 							}
-
-							if (rotaX == 2 && object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+							if (abs(rotaX) == 2)
 							{
-								object[i].texNumber = 1;
-								object[79].color = { 0,1,0,1 };
-								object[79 + 12].color = { 0,1,0,1 };
+								if (object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[80].color = { 0,1,0,1 };
+									object[80 + 12].color = { 0,1,0,1 };
+								}
 							}
 						}
 					}
@@ -1485,97 +1720,130 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					{
 						if (rotaY == 0)
 						{
-							if (rotaX == 0 && object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+							if (rotaX == 0)
 							{
-								object[i].texNumber = 1;
-								object[76].color = { 0,0,1,1 };
-								object[76 + 12].color = { 0,0,1,1 };
+								if (object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[76].color = { 0,0,1,1 };
+									object[76 + 12].color = { 0,0,1,1 };
+								}
 							}
 
-							if (rotaX == 1 && object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+							if (rotaX == 1 || rotaX == -3)
 							{
-								object[i].texNumber = 1;
-								object[78].color = { 0,0,1,1 };
-								object[78 + 12].color = { 0,0,1,1 };
+								if (object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[78].color = { 0,0,1,1 };
+									object[78 + 12].color = { 0,0,1,1 };
+								}
+							}
+							if (abs(rotaX) == 2)
+							{
+								if (object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[75].color = { 0,0,1,1 };
+									object[75 + 12].color = { 0,0,1,1 };
+								}
 							}
 
-							if (rotaX == 2 && object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+							if (rotaX == 3 || rotaX == -1)
 							{
-								object[i].texNumber = 1;
-								object[75].color = { 0,0,1,1 };
-								object[75 + 12].color = { 0,0,1,1 };
-							}
-
-							if (rotaX == 3 && object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
-							{
-								object[i].texNumber = 1;
-								object[77].color = { 0,0,1,1 };
-								object[77 + 12].color = { 0,0,1,1 };
+								if (object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[77].color = { 0,0,1,1 };
+									object[77 + 12].color = { 0,0,1,1 };
+								}
 							}
 						}
 
 						if (rotaY == 1 || rotaY == -3)
 						{
-							if (rotaX == 0 && object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+							if (rotaX == 0)
 							{
-								object[i].texNumber = 1;
-								object[80].color = { 0,0,1,1 };
-								object[80 + 12].color = { 0,0,1,1 };
+								if (object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[79].color = { 0,0,1,1 };
+									object[79 + 12].color = { 0,0,1,1 };
+								}
 							}
-
-							if (rotaX == 2 && object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+							if (abs(rotaX) == 2)
 							{
-								object[i].texNumber = 1;
-								object[80].color = { 0,0,1,1 };
-								object[80 + 12].color = { 0,0,1,1 };
+								if (object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[79].color = { 0,0,1,1 };
+									object[79 + 12].color = { 0,0,1,1 };
+								}
 							}
 						}
 
 						if (abs(rotaY) == 2)
 						{
-							if (rotaX == 0 && object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+							if (rotaX == 0)
 							{
-								object[i].texNumber = 1;
-								object[75].color = { 0,0,1,1 };
-								object[75 + 12].color = { 0,0,1,1 };
+								if (object[75].color.x == 1 && object[75].color.y == 1 && object[75].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[75].color = { 0,0,1,1 };
+									object[75 + 12].color = { 0,0,1,1 };
+								}
 							}
 
-							if (rotaX == 1 && object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+							if (rotaX == 1 || rotaX == -3)
 							{
-								object[i].texNumber = 1;
-								object[78].color = { 0,0,1,1 };
-								object[78 + 12].color = { 0,0,1,1 };
+								if (object[78].color.x == 1 && object[78].color.y == 1 && object[78].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[78].color = { 0,0,1,1 };
+									object[78 + 12].color = { 0,0,1,1 };
+								}
+							}
+							if (abs(rotaX) == 2)
+							{
+								if (object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[76].color = { 0,0,1,1 };
+									object[76 + 12].color = { 0,0,1,1 };
+								}
 							}
 
-							if (rotaX == 2 && object[76].color.x == 1 && object[76].color.y == 1 && object[76].color.z == 1)
+							if (rotaX == 3 || rotaX == -1)
 							{
-								object[i].texNumber = 1;
-								object[76].color = { 0,0,1,1 };
-								object[76 + 12].color = { 0,0,1,1 };
-							}
-
-							if (rotaX == 3 && object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
-							{
-								object[i].texNumber = 1;
-								object[77].color = { 0,0,1,1 };
-								object[77 + 12].color = { 0,0,1,1 };
+								if (object[77].color.x == 1 && object[77].color.y == 1 && object[77].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[77].color = { 0,0,1,1 };
+									object[77 + 12].color = { 0,0,1,1 };
+								}
 							}
 						}
 
 						if (rotaY == 3 || rotaY == -1)
 						{
-							if (rotaX == 0 && object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+							if (rotaX == 0)
 							{
-								object[i].texNumber = 1;
-								object[79].color = { 0,0,1,1 };
-								object[79 + 12].color = { 0,0,1,1 };
+								if (object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[80].color = { 0,0,1,1 };
+									object[80 + 12].color = { 0,0,1,1 };
+								}
 							}
 
-							if (rotaX == 2 && object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+							if (abs(rotaX) == 2)
 							{
-								object[i].texNumber = 1;
-								object[79].color = { 0,0,1,1 };
-								object[79 + 12].color = { 0,0,1,1 };
+								if (object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+								{
+									object[i].texNumber = 1;
+									object[80].color = { 0,0,1,1 };
+									object[80 + 12].color = { 0,0,1,1 };
+								}
 							}
 						}
 					}
@@ -1680,7 +1948,80 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		else if (StageNum == 2)
 		{
-			//ここに処理を入力
+			if (object[77].color.y == 0 && object[77].color.z == 0)
+			{
+				if ((object[79].color.x == 0 && object[79].color.z == 0) && (object[76].color.x == 0 && object[76].color.y == 0))
+				{
+					SceneNum = End;
+					isChange = false;//ステージ変更処理
+					isLoad = false;//ロード
+					LoadCount = 20;//ロードのウェイト
+					StageNum = 0;//0はステージセレクト。
+					MoveDirection = Right;//進行方向
+					isLeft = false;//進行方向
+					isRight = false;//進行方向
+					isUp = false;//進行方向
+					isDown = false;//進行方向
+					isRota = false;//回転しているか
+					timer = 0;//回転、移動処理の時間
+					rotaX = 0;//今のXの向き正なら右に負なら左に回転している
+					rotaY = 0;//今のYの向き正なら下に負なら上に回転している
+				}
+			}
+		}
+
+		else if (StageNum == 3)
+		{
+			if (object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+			{
+				if ((object[75].color.x == 0 && object[75].color.z == 0) && (object[76].color.x == 0 && object[76].color.z == 0) && (object[77].color.y == 0 && object[77].color.z == 0) && (object[78].color.y == 0 && object[78].color.z == 0) && (object[80].color.x == 0 && object[80].color.y == 0))
+				{
+					SceneNum = End;
+					isChange = false;//ステージ変更処理
+					isLoad = false;//ロード
+					LoadCount = 20;//ロードのウェイト
+					StageNum = 0;//0はステージセレクト。
+					MoveDirection = Right;//進行方向
+					isLeft = false;//進行方向
+					isRight = false;//進行方向
+					isUp = false;//進行方向
+					isDown = false;//進行方向
+					isRota = false;//回転しているか
+					timer = 0;//回転、移動処理の時間
+					rotaX = 0;//今のXの向き正なら右に負なら左に回転している
+					rotaY = 0;//今のYの向き正なら下に負なら上に回転している
+				}
+			}
+		}
+
+		/*
+		object[81].color = { 0,0,1,1 };
+		object[82].color = { 0,0,1,1 };//青
+		object[83].color = { 0,1,0,1 };//赤
+		object[84].color = { 0,1,0,1 };//赤
+		object[85].color = { 1,0,0,1 };//緑
+		object[86].color = { 1,0,0,1 };
+		*/
+
+		else if (StageNum == 4)
+		{
+			if ((object[75].color.x == 0 && object[75].color.y == 0) && (object[76].color.x == 0 && object[76].color.y == 0) && (object[77].color.x == 0 && object[77].color.z == 0) && (object[78].color.x == 0 && object[78].color.z == 0) && (object[79].color.y == 0 && object[79].color.z == 0) && (object[80].color.y == 0 && object[80].color.z == 0))
+			{
+				SceneNum = End;
+				isChange = false;//ステージ変更処理
+				isLoad = false;//ロード
+				LoadCount = 20;//ロードのウェイト
+				StageNum = 0;//0はステージセレクト。
+				MoveDirection = Right;//進行方向
+				isLeft = false;//進行方向
+				isRight = false;//進行方向
+				isUp = false;//進行方向
+				isDown = false;//進行方向
+				isRota = false;//回転しているか
+				timer = 0;//回転、移動処理の時間
+				rotaX = 0;//今のXの向き正なら右に負なら左に回転している
+				rotaY = 0;//今のYの向き正なら下に負なら上に回転している
+			}
 		}
 
 		else
