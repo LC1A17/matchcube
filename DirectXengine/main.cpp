@@ -542,6 +542,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 				object[86].color = { 0,0,1,1 };
 			}
 
+			else if (StageNum == 4)
+			{
+				object[81].color = { 0,0,1,1 };
+				object[82].color = { 0,0,1,1 };//青
+				object[83].color = { 0,1,0,1 };//赤
+				object[84].color = { 0,1,0,1 };//赤
+				object[85].color = { 1,0,0,1 };//緑
+				object[86].color = { 1,0,0,1 };
+			}
+
 			//背景の更新
 			sprite[1].position = { sprite[0].position.x, sprite[0].position.y, 0 };
 
@@ -1043,50 +1053,50 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 			isChange = false;
 			}
 
-			else if (StageNum == 5)
+			else if (StageNum == 4)
 			{
-				object[1].position = { -50, 0, 0 };
-				object[2].position = { -40, 0, 0 };
-				object[3].position = { -30, 0, 0 };
-				object[4].position = { -20, 0, 0 };
-				object[5].position = { -10, 0, 0 };
-				object[6].position = { -50, -20, 0 };
-				object[7].position = { -40, -20, 0 };
-				object[8].position = { -30, -20, 0 };
-				object[9].position = { -20, -20, 0 };
-				object[10].position = { -10, -20, 0 };
-				object[11].position = { -50, 20, 0 };
-				object[12].position = { -40, 20, 0 };
-				object[13].position = { -30, 20, 0 };
-				object[14].position = { -20, 20, 0 };
-				object[15].position = { -10, 20, 0 };
-				object[16].position = { -50, 10, 0 };
-				object[17].position = { -30, 10, 0 };
-				object[18].position = { -10, 10, 0 };
-				object[19].position = { -50, -10, 0 };
-				object[20].position = { -30, -10, 0 };
-				object[21].position = { -10, -10, 0 };
+				object[1].position = { -50, 20, 0 };
+				object[2].position = { -40, 20, 0 };
+				object[3].position = { -30, 20, 0 };
+				object[4].position = { -20, 20, 0 };
+				object[5].position = { -10, 20, 0 };
+				object[6].position = { -50, 10, 0 };
+				object[7].position = { -30, 10, 0 };
+				object[8].position = { -10, 10, 0 };
+				object[9].position = { -50, 0, 0 };
+				object[10].position = { -40, 0, 0 };
+				object[11].position = { -30, 0, 0 };
+				object[12].position = { -20, 0, 0 };
+				object[13].position = { -10, 0, 0 };
+				object[14].position = { -50, -10, 0 };
+				object[15].position = { -30, -10, 0 };
+				object[16].position = { -10, -10, 0 };
+				object[17].position = { -50, -20, 0 };
+				object[18].position = { -40, -20, 0 };
+				object[19].position = { -30, -20, 0 };
+				object[20].position = { -20, -20, 0 };
+				object[21].position = { -10, -20, 0 };
 
-				object[1].texNumber = 1;
-				object[2].texNumber = 11;
+				object[1].texNumber = 13;
+				object[2].texNumber = 12;
 				object[3].texNumber = 1;
 				object[4].texNumber = 1;
 				object[5].texNumber = 1;
 				object[6].texNumber = 1;
 				object[7].texNumber = 12;
-				object[8].texNumber = 1;
+				object[8].texNumber = 11;
 				object[9].texNumber = 1;
-				object[10].texNumber = 1;
+				object[10].texNumber = 13;
 				object[11].texNumber = 1;
-				object[12].texNumber = 1;
+				object[12].texNumber = 11;
 				object[13].texNumber = 11;
-				object[14].texNumber = 1;
+				object[14].texNumber = 11;
 				object[15].texNumber = 1;
-				object[16].texNumber = 1;
+				object[16].texNumber = 11;
 				object[17].texNumber = 1;
 				object[18].texNumber = 1;
 				object[19].texNumber = 13;
-				object[20].texNumber = 1;
+				object[20].texNumber = 12;
 				object[21].texNumber = 1;
 
 				//いらないブロックには認識の外側に消えていただく
@@ -1104,8 +1114,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 					rotaXCount = 0;
 					rotaYCount = 0;
 					object[i].rotation = { 0, 0, 0 };
-					object[i].position.x = object[3].position.x;
-					object[i].position.y = object[3].position.y;
+					object[i].position.x = object[11].position.x;
+					object[i].position.y = object[11].position.y;
 				}
 
 				for (int i = 87; i < 93; i++)
@@ -1493,7 +1503,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						{
 							if (rotaX == 0)
 							{
-								if (object[79].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+								if (object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
 								{
 									object[i].texNumber = 1;
 									object[79].color = { 1,0,0,1 };
@@ -1503,7 +1513,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 							if (abs(rotaX) == 2)
 							{
-								if (object[79].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+								if (object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
 								{
 									object[i].texNumber = 1;
 									object[79].color = { 1,0,0,1 };
@@ -1556,7 +1566,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						{
 							if (rotaX == 0)
 							{
-								if (object[80].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+								if (object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
 								{
 									object[i].texNumber = 1;
 									object[80].color = { 1,0,0,1 };
@@ -1564,9 +1574,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 								}
 							}
 
-							if (abs(rotaX == 2))
+							if (abs(rotaX) == 2)
 							{
-								if (object[80].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+								if (object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
 								{
 									object[i].texNumber = 1;
 									object[80].color = { 1,0,0,1 };
@@ -1624,7 +1634,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						{
 							if (rotaX == 0)
 							{
-								if (object[79].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+								if (object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
 								{
 									object[i].texNumber = 1;
 									object[79].color = { 0,1,0,1 };
@@ -1633,7 +1643,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 							}
 							if (abs(rotaX) == 2)
 							{
-								if (object[79].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+								if (object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
 								{
 									object[i].texNumber = 1;
 									object[79].color = { 0,1,0,1 };
@@ -1686,7 +1696,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						{
 							if (rotaX == 0)
 							{
-								if (object[80].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+								if (object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
 								{
 									object[i].texNumber = 1;
 									object[80].color = { 0,1,0,1 };
@@ -1695,7 +1705,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 							}
 							if (abs(rotaX) == 2)
 							{
-								if (object[80].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+								if (object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
 								{
 									object[i].texNumber = 1;
 									object[80].color = { 0,1,0,1 };
@@ -1754,7 +1764,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						{
 							if (rotaX == 0)
 							{
-								if (object[79].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+								if (object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
 								{
 									object[i].texNumber = 1;
 									object[79].color = { 0,0,1,1 };
@@ -1763,7 +1773,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 							}
 							if (abs(rotaX) == 2)
 							{
-								if (object[79].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
+								if (object[79].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
 								{
 									object[i].texNumber = 1;
 									object[79].color = { 0,0,1,1 };
@@ -1818,7 +1828,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 						{
 							if (rotaX == 0)
 							{
-								if (object[80].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+								if (object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
 								{
 									object[i].texNumber = 1;
 									object[80].color = { 0,0,1,1 };
@@ -1828,7 +1838,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 							if (abs(rotaX) == 2)
 							{
-								if (object[80].color.x == 1 && object[79].color.y == 1 && object[79].color.z == 1)
+								if (object[80].color.x == 1 && object[80].color.y == 1 && object[80].color.z == 1)
 								{
 									object[i].texNumber = 1;
 									object[80].color = { 0,0,1,1 };
